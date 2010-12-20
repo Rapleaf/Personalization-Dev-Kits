@@ -26,7 +26,6 @@ class RapleafApi:
 	def get_json_response(self, path):
 		json_response = self.handle.get_url(path, headers = RapleafApi.HEADERS)
 		if 200 <= json_response.status < 300:
-			print json_response.data
 			if json_response.data:
 				return json.JSONDecoder().decode(json_response.data)
 			else:

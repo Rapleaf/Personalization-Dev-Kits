@@ -7,13 +7,13 @@ import sys
 	The hash returned from query_by_email is iterated through
 	and each k/v pair is sent to std out """
 	
-email = sys.argv[1]					# Command line argument
+email = sys.argv[1]			# Command line argument
 api = rapleaf_api.RapleafApi()		# Instance of the API class
 try:
 	response = api.query_by_email(email)
 	for k, v in response.iteritems():
 		print '%s = %s' %(k, v)
-except Exception as inst:			# HTTP code returned other than 200
+except Exception as inst:		# HTTP code returned other than 200
 	code, body = inst	
 	print 'Error Code =', code
 	print 'Error Body =', body
