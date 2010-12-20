@@ -1,0 +1,14 @@
+package com.rapleaf.api.personalization;
+import org.json.JSONObject;
+
+public class RapleafExample {
+  public static void main(String[] args) {
+    RapleafApi api = new RapleafApi("SET_ME");
+    try {
+      JSONObject response = api.queryByEmail("auren@rapleaf.com");
+      System.out.println(response);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+}

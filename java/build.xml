@@ -1,0 +1,63 @@
+<project name="RapleafApi" default="dist" basedir=".">
+
+  <property name="src" location="src" />
+  <property name="src.java" location="${src}" />
+  <property name="build" location="build" />
+  <property name="build.classes" location="${build}/classes" />
+  <property name="jobjar.tmp.dir" location="${build}/jobjar" />
+  <!-- <property name="src.test" location="test" />
+  <property name="build.test" location="${build}/test" /> -->
+  <property name="lib" location="lib" />
+
+  <property name="jar.file" location="${build}/rapleaf-api.jar" />
+  <property name="jar.file.complete" location="${build}/rapleaf-api-complete.jar" />
+
+  <fileset id="jars" dir="${lib}" includes="*.jar" />
+
+  <path id="compile.classpath">
+    <fileset id="jars" dir="${lib}" includes="*.jar" />
+  </path>
+
+  <target name="classpath">
+    <property name="cp" refid="compile.classpath"/>
+    <echo message="Classpath: ${cp}"/>
+  </target>
+
+  <target name="clean">
+    <delete dir="${build}" />
+  </target>
+  
+  <target name="init">
+    <mkdir dir="${build}"/>
+    <mkdir dir="${build.classes}"/>
+  </target>
+
+  <target name="compile" depends="init">
+    <javac srcdir="${src.java}" destdir="${build.classes}" debug="true" classpathref="compile.classpath" />
+  </target>
+
+  <target name="dist" depends="compile">
+    <jar jarfile="${jar.file}">
+      <fileset dir="${build.classes}">
+        <include name="**/*.class" />
+      </fileset>
+      <fileset dir="${src.java}">
+        <include name="**/*.java" />
+      </fileset>
+    </jar>
+	<unjar dest="${jobjar.tmp.dir}" overwrite="false">
+	  <fileset id="jars" dir="${lib}" includes="*.jar" />
+    </unjar>
+	<jar jarfile="${jar.file.complete}">
+      <fileset dir="${build.classes}">
+        <include name="**/*.class" />
+      </fileset>
+      <fileset dir="${src.java}">
+        <include name="**/*.java" />
+      </fileset>
+	  <fileset dir="${jobjar.tmp.dir}">
+        <include name="**/*.class" />
+      </fileset>
+    </jar>
+  </target>
+</project>
