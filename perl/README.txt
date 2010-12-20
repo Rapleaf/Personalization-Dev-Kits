@@ -19,3 +19,5 @@ Copyright 2010 Rapleaf
 For general information regarding the personalization API, visit http://www.rapleaf.com/developers/api_docs/personalization/direct. The personalization API's terms and conditions are stated at http://www.rapleaf.com/developers/api_usage.
 
 The API is queried by calling the query_by_email function belonging to either the rapleaf_api file. An example script, rapleaf_example, is provided. The example script takes an e-mail as a command line parameter, connects to Rapleaf's database, and returns (and sends to stdout) a collection of associated key-value pairs.
+
+In order to run the Perl API, you need to grab JSON-2.50.tar.gz from http://search.cpan.org/~makamaka/JSON-2.50/lib/JSON.pm (flushed right). The installation is described in the README file. It consists of navigating to the download directory and running Makefile.pl, make, make test, and make install (in that order).
