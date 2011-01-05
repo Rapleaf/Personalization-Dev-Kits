@@ -23,7 +23,7 @@ class RapleafApi:
 	def __init__(self):
 		self.handle = HTTPSConnectionPool(RapleafApi.host, timeout = RapleafApi.timeout)
 	
-	def query_by_email(self, email, hash_email = None):
+	def query_by_email(self, email, hash_email = False):
 		"""
 		Takes an e-mail and returns a hash which maps attribute fields onto attributes
 		If the hash_email option is set, then the email will be hashed before it's sent to Rapleaf
