@@ -1,5 +1,5 @@
 <?php
-	/*
+ /*
 	* Copyright 2010 Rapleaf
 	*
 	*  Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,7 +16,7 @@
 	*/
 
 	namespace Rapleaf;
-	include "rapleaf_api.php";
+	include "RapleafApi.php";
 	
 	/* This example script takes an e-mail as a command line argument 
 	 * and queries Rapleaf's database for any data associated with
@@ -24,11 +24,11 @@
 	 * The hash returned from query_by_email is iterated through
 	 * and each k/v pair is sent to std out 
 	 */
-	
-	$person = $argv[1];
-	$api = new RapleafApi();
-	$response = $api -> query_by_email($person);
-	foreach ($response as $key => $value) {
+	 
+	 $person = $argv[1];
+	 $api = new RapleafApi();
+	 $response = $api -> query_by_email($person, $hash_email = true);
+	 foreach ($response as $key => $value) {
 		echo $key . " = " . $value . "\n";
-	}
+	 }
 ?>

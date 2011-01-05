@@ -22,12 +22,12 @@ require "digest"
 include ERB::Util
 
 class RapleafApi
-  API_KEY = "d4c02b8148d1cca0a2632aa08ccd3908"    # Set your API key here
+  API_KEY = "SET_ME"    # Set your API key here
   
   HOST = "personalize.rlcdn.com"
   PORT = 443
   BASE_PATH = "/v4/dr?api_key=#{API_KEY}"
-  HEADERS = {'User-Agent' => 'RapleafApi/Ruby/1.0'}
+  HEADERS = {'User-Agent' => 'RapleafApi/Ruby/1.1'}
   TIMEOUT = 2
   
   def self.query_by_email(email, hash_email = false)

@@ -19,7 +19,7 @@ Copyright 2010 Rapleaf
 
 For general information regarding the personalization API, visit http://www.rapleaf.com/developers/api_docs/personalization/direct. The personalization API's terms and conditions are stated at http://www.rapleaf.com/developers/api_usage.
 
-The API is queried by calling the query_by_email function belonging to the rapleaf_api file. An example script, rapleaf_example, is provided. The example script takes an e-mail as a command line parameter, connects to Rapleaf's database, and returns (and sends to stdout) a collection of associated key-value pairs.
+The API is queried by calling any of the query functions belonging to RapleafApi.rb. An example script, RapleafExample.rb, is provided. The example script takes an e-mail as a command line parameter, connects to Rapleaf's database, and returns (and sends to stdout) a collection of associated key-value pairs.
 
 You need each of the "json", "net/https", and "timeout" gems to run the api. To find out which gems are installed on your machine, run the command "gem list". For each of the gems <gem_name> from the previous list that aren't listed, run the command 'gem install <gem_name>'.
 
