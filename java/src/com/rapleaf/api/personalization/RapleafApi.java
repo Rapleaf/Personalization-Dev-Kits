@@ -18,6 +18,8 @@ package com.rapleaf.api.personalization;
 import java.net.*;
 import java.io.*;
 import org.json.JSONObject;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 /**
  * For general information regarding the personalization API, 
@@ -30,6 +32,25 @@ public class RapleafApi {
   private final static String BASE_URL = "https://personalize.rlcdn.com/v4/dr";
   private final static int DEFAULT_TIMEOUT = 2000;
   private final int timeout;
+  
+  private String MD5Hex(String s) {
+    String result = null;
+    try {
+      MessageDigest md5 = MessageDigest.getInstance("MD5");
+      byte[] digest = md5.digest(s.getBytes());
+      result = toHex(digest);
+    } catch (NoSuchAlgorithmException e) {}
+    return result;
+  }
+
+  private String toHex(byte[] a) {
+    StringBuilder sb = new StringBuilder(a.length * 2);
+    for (int i = 0; i < a.length; i++) {
+        sb.append(Character.forDigit((a[i] & 0xf0) >> 4, 16));
+        sb.append(Character.forDigit(a[i] & 0x0f, 16));
+    }
+    return sb.toString();
+  }
 
   /**
    * Constructor for RapleafApi class
@@ -54,11 +75,113 @@ public class RapleafApi {
 
   /**
    * @param email       String email for query
-   * @return            Returns a JSONObject associated with the email parameter
+   * @return            Returns a JSONObject associated with the parameter(s)
    * @throws Exception  Throws error code on all HTTP statuses outside of 200 <= status < 300
    */
   public JSONObject queryByEmail(String email) throws Exception {
-    String url = BASE_URL + "?email=" + URLEncoder.encode(email, "UTF-8") + "&api_key=" + apiKey;
+		return queryByEmail(email, false);
+  }
+
+	/**
+   * @param email       String email for query
+	 * @param hash_email	If true, md5 hash the email before sending
+   * @return            Returns a JSONObject associated with the parameter(s)
+   * @throws Exception  Throws error code on all HTTP statuses outside of 200 <= status < 300
+   */
+	public JSONObject queryByEmail(String email, boolean hash_email) throws Exception {
+		if (hash_email) {
+			return queryByMd5(MD5Hex(email));
+		} else {
+    	String url = BASE_URL + "?email=" + URLEncoder.encode(email, "UTF-8") + "&api_key=" + apiKey;
+    	return getJsonResponse(url);
+		}
+  }
+
+	/**
+   * @param md5Email    Md5 hashed string email for query
+   * @return            Returns a JSONObject associated with the parameter(s)
+   * @throws Exception  Throws error code on all HTTP statuses outside of 200 <= status < 300
+   */
+	public JSONObject queryByMd5(String md5Email) throws Exception {
+    String url = BASE_URL + "?md5_email=" + URLEncoder.encode(md5Email, "UTF-8") + "&api_key=" + apiKey;
+    return getJsonResponse(url);
+  }
+
+	/**
+   * @param sha1Email   Sha1 hashed string email for query
+   * @return            Returns a JSONObject associated with the parameter(s)
+   * @throws Exception  Throws error code on all HTTP statuses outside of 200 <= status < 300
+   */
+	public JSONObject queryBySha1(String sha1Email) throws Exception {
+    String url = BASE_URL + "?sha1_email=" + URLEncoder.encode(sha1Email, "UTF-8") + "&api_key=" + apiKey;
+    return getJsonResponse(url);
+  }
+
+	/**
+   * @param first    		First name
+	 * @param last    		Last name
+	 * @param street    	Street address
+	 * @param city    		City name
+	 * @param state    		State initials
+   * @return            Returns a JSONObject associated with the parameter(s)
+   * @throws Exception  Throws error code on all HTTP statuses outside of 200 <= status < 300
+   */
+	public JSONObject queryByNap(String first, String last, String street, String city, String state) throws Exception {
+    return queryByNap(first, last, street, city, state, null);
+  }
+
+	/**
+   * @param first    		First name
+	 * @param last    		Last name
+	 * @param street    	Street address
+	 * @param city    		City name
+	 * @param state    		State initials
+   * @return            Returns a JSONObject associated with the parameter(s)
+   * @throws Exception  Throws error code on all HTTP statuses outside of 200 <= status < 300
+   */
+	public JSONObject queryByNap(String first, String last, String street, String city, String state, String email) throws Exception {
+	  String url;
+		if (email != null) {
+			url = BASE_URL + "?email=" + URLEncoder.encode(email, "UTF-8") + "&api_key=" + apiKey +
+			"?first=" + URLEncoder.encode(first, "UTF-8") + "?last=" + URLEncoder.encode(last, "UTF-8") + 
+			"?street=" + URLEncoder.encode(street, "UTF-8") + "?city=" + URLEncoder.encode(city, "UTF-8") + 
+			"?state=" + URLEncoder.encode(state, "UTF-8");
+		} else {
+			url = BASE_URL + "&api_key=" + apiKey + "?state=" + URLEncoder.encode(state, "UTF-8") +
+			"?first=" + URLEncoder.encode(first, "UTF-8") + "?last=" + URLEncoder.encode(last, "UTF-8") + 
+			"?street=" + URLEncoder.encode(street, "UTF-8") + "?city=" + URLEncoder.encode(city, "UTF-8");
+		}
+    return getJsonResponse(url);
+  }
+
+	/**
+   * @param first    		First name
+	 * @param last    		Last name
+	 * @param zip					String containing 5 digit Zipcode + 4 digit extension separated by dash
+   * @return            Returns a JSONObject associated with the parameter(s)
+   * @throws Exception  Throws error code on all HTTP statuses outside of 200 <= status < 300
+   */
+	public JSONObject queryByNaz(String first, String last, String zip4) throws Exception {
+    return queryByNaz(first, last, zip4, null);
+  }
+
+	/**
+   * @param first    		First name
+	 * @param last    		Last name
+	 * @param zip					String containing 5 digit Zipcode + 4 digit extension separated by dash
+   * @return            Returns a JSONObject associated with the parameter(s)
+   * @throws Exception  Throws error code on all HTTP statuses outside of 200 <= status < 300
+   */
+	public JSONObject queryByNaz(String first, String last, String zip4, String email) throws Exception {
+	  String url;
+		if (email != null) {
+			url = BASE_URL + "?email=" + URLEncoder.encode(email, "UTF-8") + "&api_key=" + apiKey +
+			"?first=" + URLEncoder.encode(first, "UTF-8") + "?last=" + URLEncoder.encode(last, "UTF-8") +
+			"?zip4=" + zip4;
+		} else {
+			url = BASE_URL + "&api_key=" + apiKey + "?zip4=" + zip4 +
+			"?first=" + URLEncoder.encode(first, "UTF-8") + "?last=" + URLEncoder.encode(last, "UTF-8");
+		}
     return getJsonResponse(url);
   }
   

@@ -18,6 +18,6 @@ Copyright 2010 Rapleaf
 
 For general information regarding the personalization API, visit http://www.rapleaf.com/developers/api_docs/personalization/direct. The personalization API's terms and conditions are stated at http://www.rapleaf.com/developers/api_usage.
 
-The API is queried by calling any of the query functions belonging to RapleafApi.php with the appropriate parameters. An example script, rapleaf_example.php, is provided. The example script takes an e-mail as a command line parameter, connects to Rapleaf's database, and returns (and sends to stdout) a collection of associated key-value pairs.
+The API is queried by calling any of the query functions belonging to the RapleafApi file. An example script, RapleafExample, is provided. The example script takes an e-mail as a command line parameter, connects to Rapleaf's database, and returns (and sends to stdout) a collection of associated key-value pairs.
 
 For the PHP version, we add two versions to appeal both to users running older versions of PHP and to users running PHP5.

@@ -19,9 +19,9 @@ import org.json.JSONObject;
 
 public class RapleafExample {
   public static void main(String[] args) {
-    RapleafApi api = new RapleafApi("SET_ME");        // Set API key here
+    RapleafApi api = new RapleafApi("d4c02b8148d1cca0a2632aa08ccd3908");        // Set API key here
     try {
-      JSONObject response = api.queryByEmail("dummy@rapleaf.com");
+      JSONObject response = api.queryByEmail("dummy@rapleaf.com", true);
       System.out.println(response);
     } catch (Exception e) {
       e.printStackTrace();
