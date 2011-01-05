@@ -44,6 +44,7 @@ sub query_by_md5 {
   my $url = 'https://personalize.rlcdn.com/v4/dr?api_key=' . $API_KEY . '&md5_email=' . uri_escape($md5_email);
   __get_json_response($url);
 }
+
 sub query_by_sha1 {
   # Takes an e-mail that has already been hashed by sha1
   # and returns a hash which maps attribute fields onto attributes

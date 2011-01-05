@@ -23,7 +23,7 @@
   curl_setopt($rapleaf_api_curl, CURLOPT_RETURNTRANSFER, TRUE);
   curl_setopt($rapleaf_api_curl, CURLOPT_TIMEOUT, 2.0);
   curl_setopt($rapleaf_api_curl, CURLOPT_SSL_VERIFYPEER, TRUE);
-  curl_setopt($rapleaf_api_curl, CURLOPT_USERAGENT, "RapleafApi/PHP/1.0");
+  curl_setopt($rapleaf_api_curl, CURLOPT_USERAGENT, "RapleafApi/PHP/1.1");
   
   function query_by_email($email, $hash_email = false) {
     /* Takes an e-mail and returns a hash which maps attribute fields onto attributes
