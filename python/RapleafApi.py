@@ -35,20 +35,20 @@ class RapleafApi:
 		url = '%s&email=%s' % (RapleafApi.basePath, urllib.quote(email))
 		return self.get_json_response(url)
 	
-	def query_by_md5(self, email):
+	def query_by_md5(self, md5_email):
 		"""
 		Takes an e-mail that has already been hashed by md5
 		and returns a hash which maps attribute fields onto attributes
 		"""
-		url = '%s&md5_email=%s' % (RapleafApi.basePath, urllib.quote(email))
+		url = '%s&md5_email=%s' % (RapleafApi.basePath, urllib.quote(md5_email))
 		return self.get_json_response(url)
 	
-	def query_by_sha1(self, email):
+	def query_by_sha1(self, sha1_email):
 		"""
 		Takes an e-mail that has already been hashed by sha1
 		and returns a hash which maps attribute fields onto attributes
 		"""
-		url = '%s&sha1_email=%s' % (RapleafApi.basePath, urllib.quote(email))
+		url = '%s&sha1_email=%s' % (RapleafApi.basePath, urllib.quote(sha1_email))
 		return self.get_json_response(url)
 		
 	def query_by_nap(self, first, last, street, city, state, email = None):
@@ -58,9 +58,9 @@ class RapleafApi:
 		Though not necessary, adding an e-mail increases hit rate
 		"""
 		if email:
-			url = '%s&email=%s&street=%s&city=%s&state=%s' % (RapleafApi.basePath, urllib.quote(email), urllib.quote(street), urllib.quote(city), state)
+			url = '%s&email=%s&first=%s&last=%s&street=%s&city=%s&state=%s' % (RapleafApi.basePath, urllib.quote(email), urllib.quote(first), urllib.quote(last), urllib.quote(street), urllib.quote(city), urllib.quote(state))
 		else:
-			url = '%s&street=%s&city=%s&state=%s' % (RapleafApi.basePath, urllib.quote(street), urllib.quote(city), state)
+			url = '%s&first=%s&last=%s&street=%s&city=%s&state=%s' % (RapleafApi.basePath, urllib.quote(first), urllib.quote(last), urllib.quote(street), urllib.quote(city), urllib.quote(state))
 		return self.get_json_response(url)
 	
 	def query_by_naz(self, first, last, zip4, email = None):
