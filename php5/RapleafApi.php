@@ -21,9 +21,10 @@
 		private static $handle;
 		private static $API_KEY = "SET_ME";
 	
-		// Note that an exception is raised in the case that
-	  	// an HTTP response code other than 200 is sent back
-	  	// The error code and error body are displayed
+		/* Note that an exception is raised in the case that
+	   * an HTTP response code other than 200 is sent back
+	   * The error code and error body are displayed
+	   */
 	
 		function __construct() {
 			self::$handle = curl_init();
@@ -34,7 +35,10 @@
 		}
 	
 		function query_by_email($email, $hash_email = false) {
-		  if ($hash_email) {
+		  /* Takes an e-mail and returns a hash which maps attribute fields onto attributes
+  		 * If the hash_email option is set, then the email will be hashed before it's sent to Rapleaf
+  		 */
+  		if ($hash_email) {
 		    $sha1_email = sha1($email);
 		    return self::query_by_sha1($sha1_email);
 		  } else {
@@ -44,16 +48,26 @@
 		}
 		
 		function query_by_md5($md5_email) {
+		  /* Takes an e-mail that has already been hashed by md5
+  		 * returns a hash which maps attribute fields onto attributes
+  		 */
 		  $url = self::$BASE_PATH . self::$API_KEY . "&md5_email=" . urlencode($md5_email);
 		  return self::get_json_response($url);
 		}
 		
 		function query_by_sha1($sha1_email) {
+		  /* Takes an e-mail that has already been hashed by sha1
+  		 * and returns a hash which maps attribute fields onto attributes
+  		 */
 		  $url = self::$BASE_PATH . self::$API_KEY . "&sha1_email=" . urlencode($sha1_email);
 		  return self::get_json_response($url);
 		}
 		
 		function query_by_nap($first, $last, $street, $city, $state, $email = null) {
+		  /* Takes first name, last name, and postal (street, city, and state acronym),
+  		 * and returns a hash which maps attribute fields onto attributes
+  		 * Though not necessary, adding an e-mail increases hit rate
+  		 */
 		  if ($email) {
 		    $url = self::$BASE_PATH . self::$API_KEY . "&email=" . urlencode($email) .
 		    "&first=" . urlencode($first) . "&last=" . urlencode($last) . 
@@ -66,6 +80,11 @@
 		}
 		
 		function query_by_naz($first, $last, $zip4, $email = null) {
+		  /* Takes first name, last name, and zip4 code (5-digit zip 
+  		 * and 4-digit extension separated by a dash as a string),
+  		 * and returns a hash which maps attribute fields onto attributes
+  		 * Though not necessary, adding an e-mail increases hit rate
+  		 */
 		  if ($email) {
 		    $url = self::$BASE_PATH . self::$API_KEY . "&email=" . urlencode($email) .
 		    "&first=" . urlencode($first) . "&last=" . urlencode($last) . "&zip4=" . $zip4;
@@ -79,6 +98,11 @@
 		}
 	
 		private function get_json_response($url) {
+		  /* Pre: Path is an extension to personalize.rlcdn.com
+  		 * Note that an exception is raised if an HTTP response code
+  		 * other than 200 is sent back. In this case, both the error code
+  		 * the error code and error body are accessible from the exception raised
+  		 */
 			curl_setopt(self::$handle, CURLOPT_URL, $url);
 			$json_string = curl_exec(self::$handle);
 			$response_code = curl_getinfo(self::$handle, CURLINFO_HTTP_CODE);

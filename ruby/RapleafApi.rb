@@ -82,7 +82,7 @@ class RapleafApi
   private
   
   def self.get_json_response(path)
-    # Takes an e-mail and returns a hash mapping attribute fields onto attributes
+    # Takes a url and returns a hash mapping attribute fields onto attributes
     # Note that an exception is raised in the case that
     # an HTTP response code other than 200 is sent back
     # The error code and error body are put in the exception's message
