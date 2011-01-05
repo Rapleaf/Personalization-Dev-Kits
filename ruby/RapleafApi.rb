@@ -17,6 +17,8 @@ require "json"
 require "net/https"
 require "timeout"
 require "erb"
+require "digest"
+
 include ERB::Util
 
 class RapleafApi
@@ -28,8 +30,37 @@ class RapleafApi
   HEADERS = {'User-Agent' => 'RapleafApi/Ruby/1.0'}
   TIMEOUT = 2
   
-  def self.query_by_email(email)
-    get_json_response("#{BASE_PATH}&email=#{url_encode(email)}")
+  def self.query_by_email(email, hash_email = false)
+    if hash_email
+      query_by_sha1(Digest::SHA1.hexdigest(email))
+    else
+      get_json_response("#{BASE_PATH}&email=#{url_encode(email)}")
+    end
+  end
+  
+  def self.query_by_md5(md5_email)
+    get_json_response("#{BASE_PATH}&md5_email=#{url_encode(md5_email)}")
+  end
+  
+  def self.query_by_sha1(sha1_email)
+    get_json_response("#{BASE_PATH}&sha1_email=#{url_encode(sha1_email)}")
+  end
+  
+  def self.query_by_nap(first, last, street, city, state, email = nil)
+    if email
+      url = "#{BASE_PATH}&email=#{url_encode(email)}&first=#{url_encode(first)}&last=#{url_encode(last)}&street=#{url_encode(street)}&city=#{url_encode(city)}&state=#{url_encode(state)}"
+    else
+      url = "#{BASE_PATH}&first=#{url_encode(first)}&last=#{url_encode(last)}&street=#{url_encode(street)}&city=#{url_encode(city)}&state=#{url_encode(state)}"
+    end
+    get_json_response(url)
+  end
+  
+  def self.query_by_naz(first, last, zip4, email = nil)
+    if email
+      url = "#{BASE_PATH}&email=#{url_encode(email)}&first=#{url_encode(first)}&last=#{url_encode(last)}&zip4=#{zip4}"
+    else
+      url = "#{BASE_PATH}&first=#{url_encode(first)}&last=#{url_encode(last)}&zip4=#{zip4}"
+    get_json_response(url)
   end
   
   private
