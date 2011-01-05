@@ -16,7 +16,7 @@
   */
 
   namespace Rapleaf;
-  include "rapleaf_api.php";
+  include "RapleafApi.php";
   
   /* This example script takes an e-mail as a command line argument 
    * and queries Rapleaf's database for any data associated with
@@ -26,7 +26,7 @@
    */
   
   $person = $argv[1];
-  $response = query_by_email($person);
+  $response = query_by_email($person, true);
   foreach ($response as $key => $value) {
     echo $key . " = " . $value . "\n";
   }

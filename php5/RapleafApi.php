@@ -88,11 +88,9 @@
       if ($email) {
         $url = self::$BASE_PATH . self::$API_KEY . "&email=" . urlencode($email) .
         "&first=" . urlencode($first) . "&last=" . urlencode($last) . "&zip4=" . $zip4;
-        echo $url;
       } else {
         $url = self::$BASE_PATH . self::$API_KEY . "&zip4=" . $zip4 .
         "&first=" . urlencode($first) . "&last=" . urlencode($last);
-        echo $url;
       }
       return self::get_json_response($url);
     }
