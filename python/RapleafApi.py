@@ -33,7 +33,7 @@ class RapleafApi:
 			s.update(email)
 			return self.query_by_sha1(s.digest())
 		url = '%s&email=%s' % (RapleafApi.basePath, urllib.quote(email))
-		return self.get_json_response(url)
+		return self.__get_json_response(url)
 	
 	def query_by_md5(self, md5_email):
 		"""
@@ -41,7 +41,7 @@ class RapleafApi:
 		and returns a hash which maps attribute fields onto attributes
 		"""
 		url = '%s&md5_email=%s' % (RapleafApi.basePath, urllib.quote(md5_email))
-		return self.get_json_response(url)
+		return self.__get_json_response(url)
 	
 	def query_by_sha1(self, sha1_email):
 		"""
@@ -49,7 +49,7 @@ class RapleafApi:
 		and returns a hash which maps attribute fields onto attributes
 		"""
 		url = '%s&sha1_email=%s' % (RapleafApi.basePath, urllib.quote(sha1_email))
-		return self.get_json_response(url)
+		return self.__get_json_response(url)
 		
 	def query_by_nap(self, first, last, street, city, state, email = None):
 		"""
@@ -65,7 +65,7 @@ class RapleafApi:
 			url = '%s&first=%s&last=%s&street=%s&city=%s&state=%s' % (RapleafApi.basePath, 
 			urllib.quote(first), urllib.quote(last), 
 			urllib.quote(street), urllib.quote(city), urllib.quote(state))
-		return self.get_json_response(url)
+		return self.__get_json_response(url)
 	
 	def query_by_naz(self, first, last, zip4, email = None):
 		"""
@@ -80,9 +80,9 @@ class RapleafApi:
 		else:
 			url = '%s&first=%s&last=%s&zip4=%s' % (RapleafApi.basePath, 
 			urllib.quote(first), urllib.quote(last), zip4)
-		return self.get_json_response(url)
+		return self.__get_json_response(url)
 		
-	def get_json_response(self, path):
+	def __get_json_response(self, path):
 		"""
 		Pre: Path is an extension to personalize.rlcdn.com
 		Note that an exception is raised if an HTTP response code
