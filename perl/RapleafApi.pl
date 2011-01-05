@@ -30,8 +30,7 @@ sub query_by_email {
   if (defined($hash_email)) {
     my $s = Digest::SHA1 -> new;
     $s -> add($email);
-    my $sha1_email = $s -> hexdigest;
-    query_by_sha1($sha1_email);
+    query_by_email($s -> hexdigest);
   } else {
     my $url = 'https://personalize.rlcdn.com/v4/dr?api_key=' . $API_KEY . '&email=' . uri_escape($email);
     __get_json_response($url);
