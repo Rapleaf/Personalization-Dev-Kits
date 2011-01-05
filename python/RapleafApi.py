@@ -58,9 +58,13 @@ class RapleafApi:
 		Though not necessary, adding an e-mail increases hit rate
 		"""
 		if email:
-			url = '%s&email=%s&first=%s&last=%s&street=%s&city=%s&state=%s' % (RapleafApi.basePath, urllib.quote(email), urllib.quote(first), urllib.quote(last), urllib.quote(street), urllib.quote(city), urllib.quote(state))
+			url = '%s&email=%s&first=%s&last=%s&street=%s&city=%s&state=%s' % (RapleafApi.basePath, 
+			urllib.quote(email), urllib.quote(first), urllib.quote(last), 
+			urllib.quote(street), urllib.quote(city), urllib.quote(state))
 		else:
-			url = '%s&first=%s&last=%s&street=%s&city=%s&state=%s' % (RapleafApi.basePath, urllib.quote(first), urllib.quote(last), urllib.quote(street), urllib.quote(city), urllib.quote(state))
+			url = '%s&first=%s&last=%s&street=%s&city=%s&state=%s' % (RapleafApi.basePath, 
+			urllib.quote(first), urllib.quote(last), 
+			urllib.quote(street), urllib.quote(city), urllib.quote(state))
 		return self.get_json_response(url)
 	
 	def query_by_naz(self, first, last, zip4, email = None):
@@ -71,9 +75,11 @@ class RapleafApi:
 		Though not necessary, adding an e-mail increases hit rate
 		"""
 		if email:
-			url = '%s&email=%s&first=%s&last=%s&zip4=%s' % (RapleafApi.basePath, urllib.quote(email), first, last, zip4)
+			url = '%s&email=%s&first=%s&last=%s&zip4=%s' % (RapleafApi.basePath, 
+			urllib.quote(email), urllib.quote(first), urllib.quote(last), zip4)
 		else:
-			url = '%s&first=%s&last=%s&zip4=%s' % (RapleafApi.basePath, first, last, zip4)
+			url = '%s&first=%s&last=%s&zip4=%s' % (RapleafApi.basePath, 
+			urllib.quote(first), urllib.quote(last), zip4)
 		return self.get_json_response(url)
 		
 	def get_json_response(self, path):
