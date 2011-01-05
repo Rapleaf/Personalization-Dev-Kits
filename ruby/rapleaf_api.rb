@@ -6,7 +6,7 @@ require "erb"
 include ERB::Util
 
 class RapleafApi
-  API_KEY = "SET_ME"    # Set your API key here
+  API_KEY = "d4c02b8148d1cca0a2632aa08ccd3908"    # Set your API key here
   
   HOST = "personalize.rlcdn.com"
   PORT = 443
@@ -26,6 +26,7 @@ class RapleafApi
   # The error code and error body are put in the exception's message
   def self.get_json_response(path)
     response = Timeout::timeout(TIMEOUT){http_client.get(path, HEADERS)}
+    p response.code
     if response.code =~ /^2\d\d/
       (response.body && response.body != "") ? JSON.parse(response.body) : {}
     else
