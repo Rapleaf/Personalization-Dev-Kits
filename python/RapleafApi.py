@@ -85,9 +85,9 @@ class RapleafApi:
 	def __get_json_response(self, path):
 		"""
 		Pre: Path is an extension to personalize.rlcdn.com
-		Note that an exception is raised if an HTTP response code
-		other than 200 is sent back. In this case, both the error code
-		the error code and error body are accessible from the exception raised
+    Note that an exception is raised if an HTTP response code
+    other than 200 is sent back. In this case, both the error code
+    the error code and error body are accessible from the exception raised
 		"""
 		json_response = self.handle.get_url(path, headers = RapleafApi.headers)
 		if 200 <= json_response.status < 300:

@@ -31,8 +31,8 @@ class RapleafApi
   TIMEOUT = 2
   
   def self.query_by_email(email, hash_email = false)
-		# Takes an e-mail and returns a hash which maps attribute fields onto attributes
-		# If the hash_email option is set, then the email will be hashed before it's sent to Rapleaf
+    # Takes an e-mail and returns a hash which maps attribute fields onto attributes
+    # If the hash_email option is set, then the email will be hashed before it's sent to Rapleaf
     if hash_email
       query_by_sha1(Digest::SHA1.hexdigest(email))
     else
@@ -41,21 +41,21 @@ class RapleafApi
   end
   
   def self.query_by_md5(md5_email)
-		# Takes an e-mail that has already been hashed by md5
-		# and returns a hash which maps attribute fields onto attributes
+    # Takes an e-mail that has already been hashed by md5
+    # and returns a hash which maps attribute fields onto attributes
     get_json_response("#{BASE_PATH}&md5_email=#{url_encode(md5_email)}")
   end
   
   def self.query_by_sha1(sha1_email)
     # Takes an e-mail that has already been hashed by sha1
-		# and returns a hash which maps attribute fields onto attributes
+    # and returns a hash which maps attribute fields onto attributes
     get_json_response("#{BASE_PATH}&sha1_email=#{url_encode(sha1_email)}")
   end
   
   def self.query_by_nap(first, last, street, city, state, email = nil)
     # Takes first name, last name, and postal (street, city, and state acronym),
-		# and returns a hash which maps attribute fields onto attributes
-		# Though not necessary, adding an e-mail increases hit rate
+    # and returns a hash which maps attribute fields onto attributes
+    # Though not necessary, adding an e-mail increases hit rate
     if email
       url = "#{BASE_PATH}&email=#{url_encode(email)}&first=#{url_encode(first)}&last=#{url_encode(last)}" +
       "&street=#{url_encode(street)}&city=#{url_encode(city)}&state=#{url_encode(state)}"
@@ -68,9 +68,9 @@ class RapleafApi
   
   def self.query_by_naz(first, last, zip4, email = nil)
     # Takes first name, last name, and zip4 code (5-digit zip 
-		# and 4-digit extension separated by a dash as a string),
-		# and returns a hash which maps attribute fields onto attributes
-		# Though not necessary, adding an e-mail increases hit rate
+    # and 4-digit extension separated by a dash as a string),
+    # and returns a hash which maps attribute fields onto attributes
+    # Though not necessary, adding an e-mail increases hit rate
     if email
       url = "#{BASE_PATH}&email=#{url_encode(email)}&first=#{url_encode(first)}&last=#{url_encode(last)}&zip4=#{zip4}"
     else

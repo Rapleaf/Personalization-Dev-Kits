@@ -16,8 +16,8 @@ require 'RapleafApi'
 
 =begin
   This example script takes an e-mail as a command line argument 
-	and queries Rapleaf's database for any data associated with
-	the provided e-mail (unknown fields are left blank)
+  and queries Rapleaf's database for any data associated with
+  the provided e-mail (unknown fields are left blank)
 =end
 
 email = ARGV.first
