@@ -33,25 +33,6 @@ public class RapleafApi {
   private final static int DEFAULT_TIMEOUT = 2000;
   private final int timeout;
   
-  private String MD5Hex(String s) {
-    String result = null;
-    try {
-      MessageDigest md5 = MessageDigest.getInstance("MD5");
-      byte[] digest = md5.digest(s.getBytes());
-      result = toHex(digest);
-    } catch (NoSuchAlgorithmException e) {}
-    return result;
-  }
-
-  private String toHex(byte[] a) {
-    StringBuilder sb = new StringBuilder(a.length * 2);
-    for (int i = 0; i < a.length; i++) {
-        sb.append(Character.forDigit((a[i] & 0xf0) >> 4, 16));
-        sb.append(Character.forDigit(a[i] & 0x0f, 16));
-    }
-    return sb.toString();
-  }
-
   /**
    * Constructor for RapleafApi class
    * Used to access query member functions
@@ -208,4 +189,24 @@ public class RapleafApi {
     }
     return new JSONObject(responseBody);
   }
+  
+  private String MD5Hex(String s) {
+    String result = null;
+    try {
+      MessageDigest md5 = MessageDigest.getInstance("MD5");
+      byte[] digest = md5.digest(s.getBytes());
+      result = toHex(digest);
+    } catch (NoSuchAlgorithmException e) {}
+    return result;
+  }
+
+  private String toHex(byte[] a) {
+    StringBuilder sb = new StringBuilder(a.length * 2);
+    for (int i = 0; i < a.length; i++) {
+        sb.append(Character.forDigit((a[i] & 0xf0) >> 4, 16));
+        sb.append(Character.forDigit(a[i] & 0x0f, 16));
+    }
+    return sb.toString();
+  }
+  
 }
