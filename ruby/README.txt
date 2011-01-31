@@ -23,4 +23,6 @@ The API is queried by calling any of the query functions belonging to RapleafApi
 
 You need the "json" gem to run the api. To find out which gems are installed on your machine, run the command "gem list". For each of the gems <gem_name> from the previous list that aren't listed, run the command 'gem install <gem_name>'.
 
+If you receive the error 'certificate verify failed', please update your SSL certificates or contact us for support.
+
 Note that, on unsuccessful requests, we raise an error. Unsuccessful requests are any requests which send back an http response status outside of the range 200 <= status < 300.

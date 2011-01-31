@@ -22,7 +22,7 @@ require "digest"
 include ERB::Util
 
 class RapleafApi
-  API_KEY = "SET_ME"    # Set your API key here
+  API_KEY = "SET_ME"    # Set your API key
   
   HOST = "personalize.rlcdn.com"
   PORT = 443
