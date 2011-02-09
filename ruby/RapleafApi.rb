@@ -87,7 +87,6 @@ class RapleafApi
     # an HTTP response code other than 200 is sent back
     # The error code and error body are put in the exception's message
     response = Timeout::timeout(TIMEOUT){http_client.get(path, HEADERS)}
-    p response.code
     if response.code =~ /^2\d\d/
       (response.body && response.body != "") ? JSON.parse(response.body) : {}
     else
