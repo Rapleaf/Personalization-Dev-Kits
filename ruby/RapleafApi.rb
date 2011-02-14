@@ -86,7 +86,13 @@ class RapleafApi
     # Note that an exception is raised in the case that
     # an HTTP response code other than 200 is sent back
     # The error code and error body are put in the exception's message
-    response = Timeout::timeout(TIMEOUT){http_client.get(path, HEADERS)}
+    response = Timeout::timeout(TIMEOUT) do
+      begin
+        http_client.get(path, HEADERS)
+      rescue EOFError # Connection cut out. Just try a second time.
+        http_client.get(path, HEADERS)
+      end
+    end
     if response.code =~ /^2\d\d/
       (response.body && response.body != "") ? JSON.parse(response.body) : {}
     else
@@ -100,6 +106,7 @@ class RapleafApi
       @@http_client = Net::HTTP.new(HOST, PORT)
       @@http_client.use_ssl = true
       @@http_client.verify_mode = OpenSSL::SSL::VERIFY_PEER
+      @@http_client.start
     end
     @@http_client
   end
