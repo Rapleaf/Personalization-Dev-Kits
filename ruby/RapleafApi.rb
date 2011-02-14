@@ -23,7 +23,9 @@ include ERB::Util
 
 class RapleafApi
   API_KEY = "SET_ME"    # Set your API key
-  
+
+  CA_PATH = nil # set to your system-wide root ca cert path if you're having
+                # ssl verification issues. Otherwise just leave it nil.
   HOST = "personalize.rlcdn.com"
   PORT = 443
   BASE_PATH = "/v4/dr?api_key=#{API_KEY}"
@@ -105,6 +107,7 @@ class RapleafApi
     unless defined?(@@http_client)
       @@http_client = Net::HTTP.new(HOST, PORT)
       @@http_client.use_ssl = true
+      @@http_client.ca_path = CA_PATH if CA_PATH
       @@http_client.verify_mode = OpenSSL::SSL::VERIFY_PEER
       @@http_client.start
     end
