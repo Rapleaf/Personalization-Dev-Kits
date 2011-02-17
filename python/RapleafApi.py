@@ -12,6 +12,11 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
+import urllib
+from urllib3 import HTTPSConnectionPool, TimeoutError # See README for download instructions
+import json
+import hashlib
+
 class RapleafApi:
 	apiKey = 'SET_ME'		# Set your API key here
 		 
