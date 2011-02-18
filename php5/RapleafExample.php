@@ -27,8 +27,12 @@
    
    $person = $argv[1];
    $api = new RapleafApi();
-   $response = $api -> query_by_email($person, $hash_email = true);
-   foreach ($response as $key => $value) {
-    echo $key . " = " . $value . "\n";
+   try {
+     $response = $api -> query_by_email($person, $hash_email = true);
+     foreach ($response as $key => $value) {
+      echo $key . " = " . $value . "\n";
+     }
+   } catch (Exception $e) {
+     echo 'Caught exception: ' .  $e->getMessage() . "\n";
    }
 ?>
