@@ -32,7 +32,7 @@
      foreach ($response as $key => $value) {
       echo $key . " = " . $value . "\n";
      }
-   } catch (Exception $e) {
+   } catch (\Exception $e) {
      echo 'Caught exception: ' .  $e->getMessage() . "\n";
    }
 ?>

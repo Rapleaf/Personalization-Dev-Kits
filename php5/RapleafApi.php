@@ -105,7 +105,7 @@
       $json_string = curl_exec(self::$handle);
       $response_code = curl_getinfo(self::$handle, CURLINFO_HTTP_CODE);
       if ($response_code < 200 || $response_code >= 300) {
-        throw new Exception("Error Code: " . $response_code . "\nError Body: " . $json_string);
+        throw new \Exception("Error Code: " . $response_code . "\nError Body: " . $json_string);
       } else {
         $personalization = json_decode($json_string, TRUE);
         return $personalization;
