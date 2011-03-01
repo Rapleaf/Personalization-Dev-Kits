@@ -17,7 +17,7 @@
 
   namespace Rapleaf;
   class RapleafApi {
-    private static $BASE_PATH = "https://personalize.rlcdn.com/v4/dr?api_key=";
+    private static $BASE_PATH = "https://personalize.rapleaf.com/v4/dr?api_key=";
     private static $handle;
     private static $API_KEY = "SET_ME";
   
@@ -96,7 +96,7 @@
     }
   
     private function get_json_response($url) {
-      /* Pre: Path is an extension to personalize.rlcdn.com
+      /* Pre: Path is an extension to personalize.rapleaf.com
        * Note that an exception is raised if an HTTP response code
        * other than 200 is sent back. In this case, both the error code
        * the error code and error body are accessible from the exception raised

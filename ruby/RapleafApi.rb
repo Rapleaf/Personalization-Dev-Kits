@@ -26,7 +26,7 @@ class RapleafApi
 
   CA_PATH = nil # set to your system-wide root ca cert path if you're having
                 # ssl verification issues. Otherwise just leave it nil.
-  HOST = "personalize.rlcdn.com"
+  HOST = "personalize.rapleaf.com"
   PORT = 443
   BASE_PATH = "/v4/dr?api_key=#{API_KEY}"
   HEADERS = {'User-Agent' => 'RapleafApi/Ruby/1.1'}

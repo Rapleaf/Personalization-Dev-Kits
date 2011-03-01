@@ -22,7 +22,7 @@ class RapleafApi:
 		 
 	headers = {'User-Agent' : 'RapleafApi/Python/1.1'}
 	basePath = '/v4/dr?api_key=%s' %(apiKey)
-	host = 'personalize.rlcdn.com'
+	host = 'personalize.rapleaf.com'
 	timeout = 2.0
 	
 	def __init__(self):
@@ -89,7 +89,7 @@ class RapleafApi:
 		
 	def __get_json_response(self, path):
 		"""
-		Pre: Path is an extension to personalize.rlcdn.com
+		Pre: Path is an extension to personalize.rapleaf.com
     Note that an exception is raised if an HTTP response code
     other than 200 is sent back. In this case, both the error code
     the error code and error body are accessible from the exception raised

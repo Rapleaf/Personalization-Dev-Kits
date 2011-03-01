@@ -34,7 +34,7 @@ namespace personalization
   public class RapleafApi
   {
     private String apiKey;
-    private const String BASE_URL = "https://personalize.rlcdn.com/v4/dr";
+    private const String BASE_URL = "https://personalize.rapleaf.com/v4/dr";
     private const int DEFAULT_TIMEOUT = 5000;
     private int timeout;
     private JavaScriptSerializer serializer;

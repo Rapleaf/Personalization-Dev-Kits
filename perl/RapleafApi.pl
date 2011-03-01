@@ -32,7 +32,7 @@ sub query_by_email {
     $s -> add($email);
     query_by_email($s -> hexdigest);
   } else {
-    my $url = 'https://personalize.rlcdn.com/v4/dr?api_key=' . $API_KEY . '&email=' . uri_escape($email);
+    my $url = 'https://personalize.rapleaf.com/v4/dr?api_key=' . $API_KEY . '&email=' . uri_escape($email);
     __get_json_response($url);
   }
 }
@@ -41,7 +41,7 @@ sub query_by_md5 {
   # Takes an e-mail that has already been hashed by md5
   # and returns a hash which maps attribute fields onto attributes
   my $md5_email = $_[0];
-  my $url = 'https://personalize.rlcdn.com/v4/dr?api_key=' . $API_KEY . '&md5_email=' . uri_escape($md5_email);
+  my $url = 'https://personalize.rapleaf.com/v4/dr?api_key=' . $API_KEY . '&md5_email=' . uri_escape($md5_email);
   __get_json_response($url);
 }
 
@@ -49,7 +49,7 @@ sub query_by_sha1 {
   # Takes an e-mail that has already been hashed by sha1
   # and returns a hash which maps attribute fields onto attributes
   my $sha1_email = $_[0];
-  my $url = 'https://personalize.rlcdn.com/v4/dr?api_key=' . $API_KEY . '&sha1_email=' . uri_escape($sha1_email);
+  my $url = 'https://personalize.rapleaf.com/v4/dr?api_key=' . $API_KEY . '&sha1_email=' . uri_escape($sha1_email);
   __get_json_response($url);
 }
 
@@ -64,10 +64,10 @@ sub query_by_nap {
   my $state = uri_escape($_[4]);
   my $email = uri_escape($_[5]) || undef;
   if (defined($email)) {
-    my $url = 'https://personalize.rlcdn.com/v4/dr?api_key=' . $API_KEY . '&email=' . $email .
+    my $url = 'https://personalize.rapleaf.com/v4/dr?api_key=' . $API_KEY . '&email=' . $email .
     '&first=' . $first . '&last=' . $last . '&street=' . $street . '&city=' . $city . '&state=' . $state;
   } else {
-    my $url = 'https://personalize.rlcdn.com/v4/dr?api_key=' . $API_KEY .
+    my $url = 'https://personalize.rapleaf.com/v4/dr?api_key=' . $API_KEY .
     '&first=' . $first . '&last=' . $last . '&street=' . $street . '&city=' . $city . '&state=' . $state;
   }
   __get_json_response($url);
@@ -83,10 +83,10 @@ sub query_by_naz {
   my $zip4 = $_[2];
   my $email = uri_escape($_[3]) || undef;
   if (defined($email)) {
-    my $url = 'https://personalize.rlcdn.com/v4/dr?api_key=' . $API_KEY . '&email=' . $email .
+    my $url = 'https://personalize.rapleaf.com/v4/dr?api_key=' . $API_KEY . '&email=' . $email .
     '&first=' . $first . '&last=' . $last . '&zip4=' . $zip4;
   } else {
-    my $url = 'https://personalize.rlcdn.com/v4/dr?api_key=' . $API_KEY .
+    my $url = 'https://personalize.rapleaf.com/v4/dr?api_key=' . $API_KEY .
     '&first=' . $first . '&last=' . $last . '&zip4=' . $zip4;
   }
   __get_json_response($url);

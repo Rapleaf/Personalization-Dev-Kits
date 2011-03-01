@@ -18,7 +18,7 @@
   namespace Rapleaf;
   
   define("RAPLEAF_API_KEY", "SET_ME");      // Set your API key here
-  define("RAPLEAF_BASE_PATH", "https://personalize.rlcdn.com/v4/dr?api_key=" . RAPLEAF_API_KEY);
+  define("RAPLEAF_BASE_PATH", "https://personalize.rapleaf.com/v4/dr?api_key=" . RAPLEAF_API_KEY);
   $rapleaf_api_curl = curl_init();
   curl_setopt($rapleaf_api_curl, CURLOPT_RETURNTRANSFER, TRUE);
   curl_setopt($rapleaf_api_curl, CURLOPT_TIMEOUT, 2.0);
@@ -87,7 +87,7 @@
   }
 
   function get_json_response($url) {
-    /* Pre: Path is an extension to personalize.rlcdn.com
+    /* Pre: Path is an extension to personalize.rapleaf.com
      * Note that an exception is raised if an HTTP response code
      * other than 200 is sent back. In this case, both the error code
      * the error code and error body are accessible from the exception raised

@@ -29,7 +29,7 @@ import java.security.NoSuchAlgorithmException;
  */
 public class RapleafApi {
   private String apiKey;
-  private final static String BASE_URL = "https://personalize.rlcdn.com/v4/dr";
+  private final static String BASE_URL = "https://personalize.rapleaf.com/v4/dr";
   private final static int DEFAULT_TIMEOUT = 2000;
   private final int timeout;
   
