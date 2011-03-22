@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections.Generic;
 using System.Web;
 using System.Net;
@@ -67,7 +67,7 @@ namespace personalization
 
     /// <param name="email"> String email for query </param>
     /// <returns>  Returns a Dictionary associated with the parameter(s) </returns>
-    public Dictionary<String, String> queryByEmail(String email)
+    public Dictionary<String, Object> queryByEmail(String email)
     {
       return queryByEmail(email, false);
     }
@@ -75,10 +75,14 @@ namespace personalization
     /// <param name="email"> String email for query </param>
     /// <param name="hash_email">  If true, md5 hash the email before sending </param>
     /// <returns> Returns a Dictionary associated with the parameter(s) </returns>
-    public Dictionary<String, String> queryByEmail(String email, bool hash_email){
-      if (hash_email) {
+    public Dictionary<String, Object> queryByEmail(String email, bool hash_email)
+    {
+      if (hash_email)
+      {
         return queryByMd5(MD5Hex(email));
-      } else {
+      }
+      else
+      {
         String url = BASE_URL + "?email=" + HttpUtility.UrlEncode(email) + "&api_key=" + apiKey;
         return getJsonResponse(url);
       }
@@ -86,14 +90,16 @@ namespace personalization
 
     /// <param name="md5Email">  Md5 hashed string email for query </param>
     /// <returns> Returns a Dictionary associated with the parameter(s) </returns>
-    public Dictionary<String, String> queryByMd5(String md5Email){
-      String url = BASE_URL + "?md5_email=" +  HttpUtility.UrlEncode(md5Email) + "&api_key=" + apiKey;
+    public Dictionary<String, Object> queryByMd5(String md5Email)
+    {
+      String url = BASE_URL + "?md5_email=" + HttpUtility.UrlEncode(md5Email) + "&api_key=" + apiKey;
       return getJsonResponse(url);
     }
 
     /// <param name="sha1Email"> Sha1 hashed string email for query </param>
     /// <returns>  Returns a Dictionary associated with the parameter(s) </returns>
-    public Dictionary<String, String> queryBySha1(String sha1Email) {
+    public Dictionary<String, Object> queryBySha1(String sha1Email)
+    {
       String url = BASE_URL + "?sha1_email=" + HttpUtility.UrlEncode(sha1Email) + "&api_key=" + apiKey;
       return getJsonResponse(url);
     }
@@ -104,7 +110,8 @@ namespace personalization
     /// <param name="city"> City name </param>
     /// <param name="state"> State initials </param>
     /// <returns> Returns a Dictionary associated with the parameter(s) </returns>
-    public Dictionary<String, String> queryByNap(String first, String last, String street, String city, String state) {
+    public Dictionary<String, Object> queryByNap(String first, String last, String street, String city, String state)
+    {
       return queryByNap(first, last, street, city, state, null);
     }
 
@@ -114,16 +121,20 @@ namespace personalization
     /// <param name="city"> City name </param>
     /// <param name="state"> State initials </param>
     /// <returns> Returns a Dictionary associated with the parameter(s) </returns>
-    public Dictionary<String, String> queryByNap(String first, String last, String street, String city, String state, String email) {
+    public Dictionary<String, Object> queryByNap(String first, String last, String street, String city, String state, String email)
+    {
       String url;
-      if (email != null) {
-        url = BASE_URL + "?email=" +HttpUtility.UrlEncode(email) + "&api_key=" + apiKey +
-        "?first=" + HttpUtility.UrlEncode(first) + "?last=" + HttpUtility.UrlEncode(last) + 
-        "?street=" + HttpUtility.UrlEncode(street) + "?city=" + HttpUtility.UrlEncode(city) + 
+      if (email != null)
+      {
+        url = BASE_URL + "?email=" + HttpUtility.UrlEncode(email) + "&api_key=" + apiKey +
+        "?first=" + HttpUtility.UrlEncode(first) + "?last=" + HttpUtility.UrlEncode(last) +
+        "?street=" + HttpUtility.UrlEncode(street) + "?city=" + HttpUtility.UrlEncode(city) +
         "?state=" + HttpUtility.UrlEncode(state);
-      } else {
+      }
+      else
+      {
         url = BASE_URL + "&api_key=" + apiKey + "?state=" + HttpUtility.UrlEncode(state) +
-        "?first=" + HttpUtility.UrlEncode(first) + "?last=" + HttpUtility.UrlEncode(last) + 
+        "?first=" + HttpUtility.UrlEncode(first) + "?last=" + HttpUtility.UrlEncode(last) +
         "?street=" + HttpUtility.UrlEncode(street) + "?city=" + HttpUtility.UrlEncode(city);
       }
       return getJsonResponse(url);
@@ -133,7 +144,8 @@ namespace personalization
     /// <param name="last"> Last name </param>
     /// <param name="zip4"> String containing 5 digit Zipcode + 4 digit extension separated by dash </param>
     /// <returns> Returns a Dictionary associated with the parameter(s) </returns>
-    public Dictionary<String, String> queryByNaz(String first, String last, String zip4) {
+    public Dictionary<String, Object> queryByNaz(String first, String last, String zip4)
+    {
       return queryByNaz(first, last, zip4, null);
     }
 
@@ -141,13 +153,17 @@ namespace personalization
     /// <param name="last"> Last name </param>
     /// <param name="zip4"> String containing 5 digit Zipcode + 4 digit extension separated by dash </param>
     /// <returns> Returns a Dictionary associated with the parameter(s) </returns>
-    public Dictionary<String, String> queryByNaz(String first, String last, String zip4, String email) {
+    public Dictionary<String, Object> queryByNaz(String first, String last, String zip4, String email)
+    {
       String url;
-      if (email != null) {
+      if (email != null)
+      {
         url = BASE_URL + "?email=" + HttpUtility.UrlEncode(email) + "&api_key=" + apiKey +
         "?first=" + HttpUtility.UrlEncode(first) + "?last=" + HttpUtility.UrlEncode(last) +
              "?zip4=" + zip4;
-      } else {
+      }
+      else
+      {
         url = BASE_URL + "&api_key=" + apiKey + "?zip4=" + zip4 +
         "?first=" + HttpUtility.UrlEncode(first) + "?last=" + HttpUtility.UrlEncode(last);
       }
@@ -156,20 +172,20 @@ namespace personalization
 
     /// <param name="urlStr"> String email built in query with URLEncoded email </param>
     /// <returns> Returns a Dictionary from fields onto field values </returns>
-    private Dictionary<String, String> getJsonResponse(String urlStr)
+    private Dictionary<String, Object> getJsonResponse(String urlStr)
     {
       HttpWebRequest request = (HttpWebRequest)WebRequest.Create(urlStr);
       request.UserAgent = "RapleafApi/NET/1.0";
       request.Timeout = timeout;
       request.KeepAlive = true;
 
-      HttpWebResponse response = (HttpWebResponse)request.GetResponse(); 
+      HttpWebResponse response = (HttpWebResponse)request.GetResponse();
       StreamReader reader = new StreamReader(response.GetResponseStream(), Encoding.UTF8);
       String s = reader.ReadToEnd();
       reader.Close();
       response.Close();
 
-      Dictionary<String, String> jsonMap = serializer.Deserialize<Dictionary<String, String>>(s);
+      Dictionary<String, Object> jsonMap = serializer.Deserialize<Dictionary<String, Object>>(s);
       return jsonMap;
     }
 
