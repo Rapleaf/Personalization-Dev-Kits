@@ -21,8 +21,9 @@ require 'RapleafApi'
 =end
 
 email = ARGV.first
+api = RapleafApi::Api.new('MY_API_KEY') # replace with your API key
 begin
-  response = RapleafApi.query_by_email(email)
+  response = api.query_by_email(email)
   if response.empty?
     puts "No Data Found"
   else

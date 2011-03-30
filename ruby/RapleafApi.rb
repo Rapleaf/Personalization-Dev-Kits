@@ -21,97 +21,114 @@ require "digest"
 
 include ERB::Util
 
-class RapleafApi
-  API_KEY = "SET_ME"    # Set your API key
-
-  CA_PATH = nil # set to your system-wide root ca cert path if you're having
-                # ssl verification issues. Otherwise just leave it nil.
+module RapleafApi
   HOST = "personalize.rapleaf.com"
   PORT = 443
-  BASE_PATH = "/v4/dr?api_key=#{API_KEY}"
-  HEADERS = {'User-Agent' => 'RapleafApi/Ruby/1.1'}
-  TIMEOUT = 2
-  
-  def self.query_by_email(email, hash_email = false)
-    # Takes an e-mail and returns a hash which maps attribute fields onto attributes
-    # If the hash_email option is set, then the email will be hashed before it's sent to Rapleaf
-    if hash_email
-      query_by_sha1(Digest::SHA1.hexdigest(email))
-    else
-      get_json_response("#{BASE_PATH}&email=#{url_encode(email)}")
+  HEADERS = {'User-Agent' => 'RapleafApi/Ruby/1.2.1'}
+
+  class Api
+    def initialize(api_key, options = {})
+      @API_KEY = api_key
+      @BASE_PATH = "/v4/dr?api_key=#{@API_KEY}"
+      @TIMEOUT = options[:timeout] || 2
+      @CA_FILE = options[:ca_file] # set to your system-wide root ca cert file 
+                                   # if you're having ssl verification issues
     end
-  end
   
-  def self.query_by_md5(md5_email)
+    # Takes an e-mail and returns a hash which maps attribute fields onto attributes
+    # Options:
+    #  :hash_email     - the email will be hashed before it's sent to Rapleaf
+    #  :show_available - return the string "Data Available" for fields the API 
+    #                    account is not subscribed to but for which Rapleaf has data
+    def query_by_email(email, options = {})
+      if options[:hash_email]
+        query_by_sha1(Digest::SHA1.hexdigest(email), :show_available => options[:show_available])
+      else
+        get_json_response("#{@BASE_PATH}&email=#{url_encode(email)}", options[:show_available])
+      end
+    end
+  
     # Takes an e-mail that has already been hashed by md5
-    # and returns a hash which maps attribute fields onto attributes
-    get_json_response("#{BASE_PATH}&md5_email=#{url_encode(md5_email)}")
-  end
+    # and returns a hash which maps attribute fields onto attributes,
+    # optionally showing available data in the response
+    def query_by_md5(md5_email, options = {})
+      get_json_response("#{@BASE_PATH}&md5_email=#{url_encode(md5_email)}", options[:show_available])
+    end
   
-  def self.query_by_sha1(sha1_email)
     # Takes an e-mail that has already been hashed by sha1
-    # and returns a hash which maps attribute fields onto attributes
-    get_json_response("#{BASE_PATH}&sha1_email=#{url_encode(sha1_email)}")
-  end
+    # and returns a hash which maps attribute fields onto attributes,
+    # optionally showing available data in the response
+    def query_by_sha1(sha1_email, options = {})
+      get_json_response("#{@BASE_PATH}&sha1_email=#{url_encode(sha1_email)}", options[:show_available])
+    end
   
-  def self.query_by_nap(first, last, street, city, state, email = nil)
     # Takes first name, last name, and postal (street, city, and state acronym),
     # and returns a hash which maps attribute fields onto attributes
-    # Though not necessary, adding an e-mail increases hit rate
-    if email
-      url = "#{BASE_PATH}&email=#{url_encode(email)}&first=#{url_encode(first)}&last=#{url_encode(last)}" +
-      "&street=#{url_encode(street)}&city=#{url_encode(city)}&state=#{url_encode(state)}"
-    else
-      url = "#{BASE_PATH}&first=#{url_encode(first)}&last=#{url_encode(last)}" +
-      "&street=#{url_encode(street)}&city=#{url_encode(city)}&state=#{url_encode(state)}"
+    # Options:
+    #  :email          - query with an email to increase the hit rate
+    #  :show_available - return the string "Data Available" for fields 
+    #                    the API account is not subscribed to but for 
+    #                    which Rapleaf has data
+    def query_by_nap(first, last, street, city, state, options = {})
+      if options[:email]
+        url = "#{@BASE_PATH}&email=#{url_encode(options[:email])}&first=#{url_encode(first)}&last=#{url_encode(last)}" +
+        "&street=#{url_encode(street)}&city=#{url_encode(city)}&state=#{url_encode(state)}"
+      else
+        url = "#{@BASE_PATH}&first=#{url_encode(first)}&last=#{url_encode(last)}" +
+        "&street=#{url_encode(street)}&city=#{url_encode(city)}&state=#{url_encode(state)}"
+      end
+      get_json_response(url, options[:show_available])
     end
-    get_json_response(url)
-  end
   
-  def self.query_by_naz(first, last, zip4, email = nil)
     # Takes first name, last name, and zip4 code (5-digit zip 
     # and 4-digit extension separated by a dash as a string),
     # and returns a hash which maps attribute fields onto attributes
-    # Though not necessary, adding an e-mail increases hit rate
-    if email
-      url = "#{BASE_PATH}&email=#{url_encode(email)}&first=#{url_encode(first)}&last=#{url_encode(last)}&zip4=#{zip4}"
-    else
-      url = "#{BASE_PATH}&first=#{url_encode(first)}&last=#{url_encode(last)}&zip4=#{zip4}"
+    # Options:
+    #  :email          - query with an email to increase the hit rate
+    #  :show_available - return the string "Data Available" for fields 
+    #                    the API account is not subscribed to but for 
+    #                    which Rapleaf has data
+    def query_by_naz(first, last, zip4, options = {})
+      if options[:email]
+        url = "#{@BASE_PATH}&email=#{url_encode(options[:email])}&first=#{url_encode(first)}&last=#{url_encode(last)}&zip4=#{zip4}"
+      else
+        url = "#{@BASE_PATH}&first=#{url_encode(first)}&last=#{url_encode(last)}&zip4=#{zip4}"
+      end
+      get_json_response(url, options[:show_available])
     end
-    get_json_response(url)
-  end
   
-  private
+    private
   
-  def self.get_json_response(path)
     # Takes a url and returns a hash mapping attribute fields onto attributes
     # Note that an exception is raised in the case that
     # an HTTP response code other than 200 is sent back
     # The error code and error body are put in the exception's message
-    response = Timeout::timeout(TIMEOUT) do
-      begin
-        http_client.get(path, HEADERS)
-      rescue EOFError # Connection cut out. Just try a second time.
-        http_client.get(path, HEADERS)
+    def get_json_response(path, show_available = false)
+      path += "&show_available" if show_available
+      response = Timeout::timeout(@TIMEOUT) do
+        begin
+          http_client.get(path, HEADERS)
+        rescue EOFError # Connection cut out. Just try a second time.
+          http_client.get(path, HEADERS)
+        end
+      end
+      if response.code =~ /^2\d\d/
+        (response.body && response.body != "") ? JSON.parse(response.body) : {}
+      else
+        raise "Error Code #{response.code}: \"#{response.body}\""
       end
     end
-    if response.code =~ /^2\d\d/
-      (response.body && response.body != "") ? JSON.parse(response.body) : {}
-    else
-      raise "Error Code #{response.code}: \"#{response.body}\""
-    end
-  end
   
-  # Returns http connection to HOST on PORT
-  def self.http_client
-    unless defined?(@@http_client)
-      @@http_client = Net::HTTP.new(HOST, PORT)
-      @@http_client.use_ssl = true
-      @@http_client.ca_path = CA_PATH if CA_PATH
-      @@http_client.verify_mode = OpenSSL::SSL::VERIFY_PEER
-      @@http_client.start
+    # Returns http connection to HOST on PORT
+    def http_client
+      unless defined?(@@http_client)
+        @@http_client = Net::HTTP.new(HOST, PORT)
+        @@http_client.use_ssl = true
+        @@http_client.ca_file = @CA_FILE if @CA_FILE
+        @@http_client.verify_mode = OpenSSL::SSL::VERIFY_PEER
+        @@http_client.start
+      end
+      @@http_client
     end
-    @@http_client
   end
-
 end
