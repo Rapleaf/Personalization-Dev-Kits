@@ -42,7 +42,7 @@ module RapleafApi
     #                    account is not subscribed to but for which Rapleaf has data
     def query_by_email(email, options = {})
       if options[:hash_email]
-        query_by_sha1(Digest::SHA1.hexdigest(email), :show_available => options[:show_available])
+        query_by_sha1(Digest::SHA1.hexdigest(email.downcase), :show_available => options[:show_available])
       else
         get_json_response("#{@BASE_PATH}&email=#{url_encode(email)}", options[:show_available])
       end

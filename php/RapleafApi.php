@@ -30,7 +30,7 @@
      * If the hash_email option is set, then the email will be hashed before it's sent to Rapleaf
      */
     if ($hash_email) {
-      $sha1_email = sha1($email);
+      $sha1_email = sha1(strtolower($email));
       return query_by_sha1($sha1_email);
     } else {
       $url = RAPLEAF_BASE_PATH . "&email=" . urlencode($email);

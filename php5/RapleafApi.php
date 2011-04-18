@@ -39,7 +39,7 @@
        * If the hash_email option is set, then the email will be hashed before it's sent to Rapleaf
        */
       if ($hash_email) {
-        $sha1_email = sha1($email);
+        $sha1_email = sha1(strtolower($email));
         return self::query_by_sha1($sha1_email);
       } else {
         $url = self::$BASE_PATH . self::$API_KEY . "&email=" . urlencode($email);

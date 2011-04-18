@@ -29,7 +29,7 @@ sub query_by_email {
   my $hash_email = $_[1] || undef;
   if (defined($hash_email)) {
     my $s = Digest::SHA1 -> new;
-    $s -> add($email);
+    $s -> add($email -> lc);
     query_by_email($s -> hexdigest);
   } else {
     my $url = 'https://personalize.rapleaf.com/v4/dr?api_key=' . $API_KEY . '&email=' . uri_escape($email);

@@ -35,8 +35,8 @@ class RapleafApi:
 		"""
 		if hash_email:
 			s = hashlib.sha1()
-			s.update(email)
-			return self.query_by_sha1(s.digest())
+			s.update(email.lower())
+			return self.query_by_sha1(s.hexdigest())
 		url = '%s&email=%s' % (RapleafApi.basePath, urllib.quote(email))
 		return self.__get_json_response(url)
 	
