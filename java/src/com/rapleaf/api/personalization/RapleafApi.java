@@ -71,7 +71,7 @@ public class RapleafApi {
    */
   public JSONObject queryByEmail(String email, boolean hash_email) throws Exception {
     if (hash_email) {
-      return queryByMd5(MD5Hex(email));
+      return queryByMd5(MD5Hex(email.toLowerCase()));
     } else {
       String url = BASE_URL + "?email=" + URLEncoder.encode(email, "UTF-8") + "&api_key=" + apiKey;
       return getJsonResponse(url);
