@@ -16,10 +16,14 @@ Copyright 2010 Rapleaf
    See the License for the specific language governing permissions and
    limitations under the License.
 
-
 For general information regarding the personalization API, visit http://www.rapleaf.com/developers/api_docs/personalization/direct. The personalization API's terms and conditions are stated at http://www.rapleaf.com/developers/api_usage.
 
-The API is queried by calling any of the query functions belonging to RapleafApi.rb. An example script, RapleafExample.rb, is provided. The example script takes an e-mail as a command line parameter, connects to Rapleaf's database, and returns (and sends to stdout) a collection of associated key-value pairs.
+NOTE:
+If all you want to do is query the API from ruby we recommend using our gem. It's easily installed via 'gem install rapleaf_api'.
+
+
+Library Description:
+The API is queried by calling any of the query functions belonging to rapleaf_api.rb. An example script, rapleaf_example.rb, is provided. The example script takes an e-mail as a command line parameter, connects to Rapleaf's database, and returns (and sends to stdout) a collection of associated key-value pairs.
 
 You need the "json" gem to run the api. To find out which gems are installed on your machine, run the command "gem list". For each of the gems <gem_name> from the previous list that aren't listed, run the command 'gem install <gem_name>'.
 

@@ -12,7 +12,7 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
-require 'RapleafApi'
+require './rapleaf_api'
 
 =begin
   This example script takes an e-mail as a command line argument 
