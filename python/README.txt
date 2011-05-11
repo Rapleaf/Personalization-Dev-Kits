@@ -18,8 +18,74 @@ Copyright 2010 Rapleaf
 
 For general information regarding the personalization API, visit http://www.rapleaf.com/developers/api_docs/personalization/direct. The personalization API's terms and conditions are stated at http://www.rapleaf.com/developers/api_usage.
 
-The API is queried by calling any of the query functions belonging to RapleafApi.py with the appropriate parameters. An example script, RapleafExample.py, is provided. The example script takes an e-mail as a command line parameter, connects to Rapleaf's database, and returns (and sends to stdout) a collection of associated key-value pairs.
+How to Use
+==========
 
-To run the Python version, you'll need to download and install the urllib3 library. We choose this one since it recycles https connections, unlike the built in modules (urllib and urllib2). If you've installed easy_install, you need only run 'easy_install urllib3'. Else, to download urllib3, visit the url http://urllib3.googlecode.com/files/urllib3-0.3.1.tar.gz. Once you've unzipped the download, open a terminal window and navigate to the folder into which you unzipped the download. When you open the folder, one of the subdirectories is 'urllib3.' Open it. It contains a script called setup.py which you'll run via the command 'python setup.py install'. The license for the urllib3 license is posted at http://www.opensource.org/licenses/mit-license.php.
+Installation
+------------
+
+::
+
+	easy_install rapleafApi
+
+Usage
+-----
+
+>>> from rapleafApi import RapleafApi
+>>> api = RapleafApi.RapleafApi('API_KEY')
+>>> api.query_by_email('test@example.com')
+{u'gender': u'Male', u'age': u'25-34'}
+
+
+Query Options
+-------------
+The egg supports several ways to query Rapleaf's API: email, hashed email (either MD5 or SHA1 hash), name and postal (NAP), or name and ZIP+4 (NAZ).
+
+**query_by_email(self, email, hash_email = False, show_available = False)**
+
+| This method queries Rapleaf's API with the specified email. 
+| If the hash_email option is set, then the email will be hashed before it's sent to Rapleaf.
+| If the show_available option is set, then the string "Data Available" will be returned for those fields which the API account is not subscribed but for which RapLeaf has data.
+
+| **query_by_md5(self, md5_email, show_available = False)**
+| **query_by_sha1(self, sha1_email, show_available = False)**
+
+| These methods query Rapleaf's API with the specified email hashes (either MD5 or SHA1, respectively). 
+| If the show_available option is set, then the string "Data Available" will be returned for those fields which the API account is not subscribed but for which RapLeaf has data.
+ 
+**query_by_nap(self, first, last, street, city, state, email = None, show_available = False)**
+
+| This method queries Rapleaf's API with a name and postal address: first name, last name, street, city, and state acronym (i.e., the state's 2-character postal code).
+| Though not necessary, adding an e-mail increases hit rate.
+| If the show_available option is set, then the string "Data Available" will be returned for those fields which the API account is not subscribed but for which RapLeaf has data.
+
+
+**query_by_naz(self, first, last, zip4, email = None, show_available = False)**
+
+| This method queries Rapleaf's API with a name and ZIP+4 code. The ZIP+4 is a string with a 5-digit ZIP code and 4-digit extension separated by a dash.
+| Though not necessary, adding an e-mail increases hit rate.
+| If the show_available option is set, then the string "Data Available" will be returned for those fields which the API account is not subscribed but for which RapLeaf has data.
+
+
+Contributing
+============
+If you have suggestions or patches, feel free to email us at
+<developer at rapleaf dot com>. We look forward to hearing from you!
+
+
+Contributors
+============
+Nicole Allard <nicole at rapleaf dot com>
+
+
+Dependencies
+============
+urllib3
+::
+
+	easy_install urllib3
+
+or visit the url http://urllib3.googlecode.com/files/urllib3-0.3.1.tar.gz.
+Once you've unzipped the download, open a terminal window and navigate to the folder into which you unzipped the download. When you open the folder, one of the subdirectories is 'urllib3.' Open it. It contains a script called setup.py which you'll run via the command 'python setup.py install'.
 
 Note that, on unsuccessful requests, we raise an error. Unsuccessful requests are any requests which send back an http response status outside of the range 200 <= status < 300.
