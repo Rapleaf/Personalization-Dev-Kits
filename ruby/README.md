@@ -64,10 +64,10 @@ This method queries Rapleaf's API with a name and ZIP+4 code. The ZIP+4 is a str
 Contributing
 ============
 If you have suggestions or patches, feel free to email us at
-<developer at rapleaf dot com>. We look forward to hearing from you!
+[developer at rapleaf dot com]. We look forward to hearing from you!
 
 
 Contributors
 ============
-Greg Poulos <greg at rapleaf dot com>
-Sean Carr <sean at rapleaf dot com>
+Greg Poulos [greg at rapleaf dot com]
+Sean Carr [sean at rapleaf dot com]
