@@ -70,3 +70,4 @@ If you have suggestions or patches, feel free to email us at
 Contributors
 ============
 Greg Poulos <greg at rapleaf dot com>
+Sean Carr <sean at rapleaf dot com>
