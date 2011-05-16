@@ -57,8 +57,8 @@ This method queries Rapleaf's API with a name and postal address: first name, la
 
 This method queries Rapleaf's API with a name and ZIP+4 code. The ZIP+4 is a string with a 5-digit ZIP code and 4-digit extension separated by a dash. This method accepts the following options:
 
-- :email          => You can include an email in your NAP query to increase the hit rate. Defaults to nil.
-- :show_available => Controls whether the response will include information about available data. Defaults to nil.
+ - :email          => You can include an email in your NAP query to increase the hit rate. Defaults to nil.
+ - :show_available => Controls whether the response will include information about available data. Defaults to nil.
 
 
 Contributing
@@ -69,5 +69,5 @@ If you have suggestions or patches, feel free to email us at
 
 Contributors
 ============
-Greg Poulos [greg at rapleaf dot com]
-Sean Carr [sean at rapleaf dot com]
+ - Greg Poulos [greg at rapleaf dot com]
+ - Sean Carr [sean at rapleaf dot com]
