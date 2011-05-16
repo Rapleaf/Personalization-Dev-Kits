@@ -1,0 +1,11 @@
+v1.2.2. Downcase emails before hashing
+
+v1.2.1. Support ca_file instead of ca_path in constructor
+
+v1.2.0. Bump version number to match User-Agent
+
+v0.1.1. Bug fixes
+
+v0.1.0. Added support for show_available
+
+v0.0.1. Initial version
