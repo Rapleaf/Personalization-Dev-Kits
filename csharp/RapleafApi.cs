@@ -77,6 +77,7 @@ namespace personalization
     /// <returns> Returns a Dictionary associated with the parameter(s) </returns>
     public Dictionary<String, Object> queryByEmail(String email, bool hash_email)
     {
+      email = email.ToLower();
       if (hash_email)
       {
         return queryByMd5(MD5Hex(email));
