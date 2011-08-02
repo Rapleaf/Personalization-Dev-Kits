@@ -24,12 +24,13 @@ include ERB::Util
 module RapleafApi
   HOST = "personalize.rapleaf.com"
   PORT = 443
-  HEADERS = {'User-Agent' => 'RapleafApi/Ruby/1.2.2'}
+  HEADERS = {'User-Agent' => 'RapleafApi/Ruby/1.2.2', 'Content-Type' => 'application/json'}
 
   class Api
     def initialize(api_key, options = {})
       @API_KEY = api_key
       @BASE_PATH = "/v4/dr?api_key=#{@API_KEY}"
+      @BULK_PATH = "/v4/bulk?api_key=#{@API_KEY}"
       @TIMEOUT = options[:timeout] || 2
       @CA_FILE = options[:ca_file] # set to your system-wide root ca cert file 
                                    # if you're having ssl verification issues
@@ -97,8 +98,34 @@ module RapleafApi
       get_json_response(url, options[:show_available])
     end
   
+    def bulk_query(set, upsell = false)
+      path = @BULK_PATH
+      if upsell
+        path = path + "&show_available=true" 
+      end
+      
+      get_bulk_response(path,JSON.generate(set))
+    end
+
     private
   
+    def get_bulk_response(path, data)
+      response = Timeout::timeout(@TIMEOUT) do
+      http_client.post(path, data, HEADERS)
+        begin
+          http_client.post(path, data, HEADERS)
+        rescue EOFError # Connection cut out. Just try a second time.
+          http_client.post(path, data, HEADERS)
+        end
+      end
+
+      if response.code =~ /^2\d\d/
+        (response.body && response.body != "") ? JSON.parse(response.body) : []
+      else
+        raise "Error Code #{response.code}: \"#{response.body}\""
+      end
+    end
+
     # Takes a url and returns a hash mapping attribute fields onto attributes
     # Note that an exception is raised in the case that
     # an HTTP response code other than 200 is sent back
@@ -125,7 +152,7 @@ module RapleafApi
         @@http_client = Net::HTTP.new(HOST, PORT)
         @@http_client.use_ssl = true
         @@http_client.ca_file = @CA_FILE if @CA_FILE
-        @@http_client.verify_mode = OpenSSL::SSL::VERIFY_PEER
+        #@@http_client.verify_mode = OpenSSL::SSL::VERIFY_PEER
         @@http_client.start
       end
       @@http_client
