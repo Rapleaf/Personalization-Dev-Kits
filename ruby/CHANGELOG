@@ -1,3 +1,5 @@
+v1.2.3. Bulk API support
+
 v1.2.2. Downcase emails before hashing
 
 v1.2.1. Support ca_file instead of ca_path in constructor
