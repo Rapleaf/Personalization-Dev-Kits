@@ -98,20 +98,17 @@ module RapleafApi
       get_json_response(url, options[:show_available])
     end
   
-    def bulk_query(set, upsell = false)
+    def bulk_query(set, show_available = false)
       path = @BULK_PATH
-      if upsell
-        path = path + "&show_available=true" 
-      end
+      path += "&show_available=true" if show_available
       
-      get_bulk_response(path,JSON.generate(set))
+      get_bulk_response(path, JSON.generate(set))
     end
 
     private
   
     def get_bulk_response(path, data)
       response = Timeout::timeout(@TIMEOUT) do
-      http_client.post(path, data, HEADERS)
         begin
           http_client.post(path, data, HEADERS)
         rescue EOFError # Connection cut out. Just try a second time.
