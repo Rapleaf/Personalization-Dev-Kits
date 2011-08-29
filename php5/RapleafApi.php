@@ -31,7 +31,6 @@
       self::$handle = curl_init();
       self::$API_KEY = $api_key;
       curl_setopt(self::$handle, CURLOPT_RETURNTRANSFER, TRUE);
-      curl_setopt(self::$handle, CURLOPT_TIMEOUT, 2.0);
       curl_setopt(self::$handle, CURLOPT_SSL_VERIFYPEER, TRUE);
       curl_setopt(self::$handle, CURLOPT_USERAGENT, "RapleafApi/PHP5/1.1");
     }
@@ -109,6 +108,7 @@
     private function get_bulk_query($data, $url) {
       curl_setopt(self::$handle, CURLOPT_HTTPHEADER, array("Content-Type: application/json"));
       curl_setopt(self::$handle, CURLOPT_URL, $url);
+      curl_setopt(self::$handle, CURLOPT_TIMEOUT, 30.0);
       curl_setopt(self::$handle, CURLOPT_POST, true);
       curl_setopt(self::$handle, CURLOPT_POSTFIELDS, $data);
       $json_string = curl_exec(self::$handle);
@@ -136,6 +136,7 @@
         $url = $url . "&show_available=true";
       }
       curl_setopt(self::$handle, CURLOPT_URL, $url);
+      curl_setopt(self::$handle, CURLOPT_TIMEOUT, 2.0);
       $json_string = curl_exec(self::$handle);
       $response_code = curl_getinfo(self::$handle, CURLINFO_HTTP_CODE);
       if ($response_code < 200 || $response_code >= 300) {

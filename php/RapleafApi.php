@@ -22,7 +22,6 @@
   define("RAPLEAF_BULK_PATH", "https://personalize.rapleaf.com/v4/bulk?api_key=" . RAPLEAF_API_KEY);
   $rapleaf_api_curl = curl_init();
   curl_setopt($rapleaf_api_curl, CURLOPT_RETURNTRANSFER, TRUE);
-  curl_setopt($rapleaf_api_curl, CURLOPT_TIMEOUT, 2.0);
   curl_setopt($rapleaf_api_curl, CURLOPT_SSL_VERIFYPEER, TRUE);
   curl_setopt($rapleaf_api_curl, CURLOPT_USERAGENT, "RapleafApi/PHP/1.1");
   
@@ -99,6 +98,7 @@
     global $rapleaf_api_curl;
     curl_setopt($rapleaf_api_curl, CURLOPT_HTTPHEADER, array("Content-Type: application/json"));
     curl_setopt($rapleaf_api_curl, CURLOPT_URL, $url);
+    curl_setopt($rapleaf_api_curl, CURLOPT_TIMEOUT, 30.0);
     curl_setopt($rapleaf_api_curl, CURLOPT_POST, true);
     curl_setopt($rapleaf_api_curl, CURLOPT_POSTFIELDS, $data);
     
@@ -128,6 +128,7 @@
       $url = $url . $show_available; 
     }
     curl_setopt($rapleaf_api_curl, CURLOPT_URL, $url);
+    curl_setopt($rapleaf_api_curl, CURLOPT_TIMEOUT, 2.0);
     $json_string = curl_exec($rapleaf_api_curl);
     $response_code = curl_getinfo($rapleaf_api_curl, CURLINFO_HTTP_CODE);
     if ($response_code < 200 || $response_code >= 300) {
