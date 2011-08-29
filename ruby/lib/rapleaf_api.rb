@@ -32,6 +32,7 @@ module RapleafApi
       @BASE_PATH = "/v4/dr?api_key=#{@API_KEY}"
       @BULK_PATH = "/v4/bulk?api_key=#{@API_KEY}"
       @TIMEOUT = options[:timeout] || 2
+      @BULK_TIMEOUT = options[:bulk_timeout] || 30
       @CA_FILE = options[:ca_file] # set to your system-wide root ca cert file 
                                    # if you're having ssl verification issues
     end
@@ -108,7 +109,7 @@ module RapleafApi
     private
   
     def get_bulk_response(path, data)
-      response = Timeout::timeout(@TIMEOUT) do
+      response = Timeout::timeout(@BULK_TIMEOUT) do
         begin
           http_client.post(path, data, HEADERS)
         rescue EOFError # Connection cut out. Just try a second time.
