@@ -36,16 +36,19 @@ public class RapleafApi {
   private final static String BASE_URL = "https://personalize.rapleaf.com/v4/dr";
   private final static String BULK_URL = "https://personalize.rapleaf.com/v4/bulk";
   private final static int DEFAULT_TIMEOUT = 2000;
+  private final static int DEFAULT_BULK_TIMEOUT = 30000;
   private final int timeout;
+  private final int bulkTimeout;
   
   /**
    * Constructor for RapleafApi class
    * Used to access query member functions
    * @param apiKey    String given by individual's API key
    * The default timeout is set to 2000 ms
+   * The default bulk timeout is set to 30000 ms
    */
   public RapleafApi(String apiKey) {
-    this(apiKey, DEFAULT_TIMEOUT);
+    this(apiKey, DEFAULT_TIMEOUT, DEFAULT_BULK_TIMEOUT);
   }
   
   /**
@@ -55,8 +58,20 @@ public class RapleafApi {
    * @param timeout   Supplied integer (ms) overrides the default timeout
    */
   public RapleafApi(String apiKey, int timeout) {
+    this(apiKey, timeout, DEFAULT_BULK_TIMEOUT);
+  }
+  
+  /**
+   * Constructor for RapleafApi class
+   * Used to access query member functions
+   * @param apiKey    String given by individual's API key
+   * @param timeout   Supplied integer (ms) overrides the default timeout
+   * @param bulkTimeout   Supplied integer (ms) overrides the default bulk timeout
+   */
+  public RapleafApi(String apiKey, int timeout, int bulkTimeout) {
     this.apiKey = apiKey;
     this.timeout = timeout;
+    this.bulkTimeout = bulkTimeout;
   }
 
   /**
@@ -263,7 +278,7 @@ public class RapleafApi {
     handle.setRequestProperty("User-Agent", "RapleafApi/Java/1.0");
     handle.setRequestProperty("Content-Type", "application/json");
     handle.setConnectTimeout(timeout);
-    handle.setReadTimeout(timeout);
+    handle.setReadTimeout(bulkTimeout);
     handle.setDoOutput(true);
     handle.setRequestMethod("POST");
     OutputStreamWriter wr = new OutputStreamWriter(handle.getOutputStream());
