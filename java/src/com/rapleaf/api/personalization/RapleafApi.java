@@ -300,6 +300,11 @@ public class RapleafApi {
     wr.close();
     rd.close();
     
+    int responseCode = handle.getResponseCode();
+    if (responseCode < 200 || responseCode > 299) {
+      throw new Exception("Error Code " + responseCode + ": " + sb.toString());
+    }
+    
     return sb.toString();
   }
   
