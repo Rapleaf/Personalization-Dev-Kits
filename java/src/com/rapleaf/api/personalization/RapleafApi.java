@@ -22,7 +22,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -97,16 +97,17 @@ public class RapleafApi {
   /**
    * @param email       String email for query
    * @param hash_email  If true, md5 hash the email before sending
-   * @param upsell      If true, show upsale information in response
+   * @param showAvailable  If true, return the string "Data Available" for
+   *                     fields the account is not subscribed to but for which Rapleaf has data
    * @return            Returns a JSONObject associated with the parameter(s)
    * @throws Exception  Throws error code on all HTTP statuses outside of 200 <= status < 300
    */
-  public JSONObject queryByEmail(String email, boolean hash_email, boolean upsell) throws Exception {
+  public JSONObject queryByEmail(String email, boolean hash_email, boolean showAvailable) throws Exception {
     if (hash_email) {
-      return queryByMd5(MD5Hex(email.toLowerCase()),upsell);
+      return queryByMd5(MD5Hex(email.toLowerCase()), showAvailable);
     } else {
       String url = BASE_URL + "?email=" + URLEncoder.encode(email, "UTF-8") + "&api_key=" + apiKey;
-      return getJsonResponse(url, upsell);
+      return getJsonResponse(url, showAvailable);
     }
   }
   
@@ -121,13 +122,14 @@ public class RapleafApi {
 
   /**
    * @param md5Email    Md5 hashed string email for query
-   * @param upsell      If true, show upsale information in reply
+   * @param showAvailable  If true, return the string "Data Available" for
+   *                     fields the account is not subscribed to but for which Rapleaf has data
    * @return            Returns a JSONObject associated with the parameter(s)
    * @throws Exception  Throws error code on all HTTP statuses outside of 200 <= status < 300
    */
-  public JSONObject queryByMd5(String md5Email, boolean upsell) throws Exception {
+  public JSONObject queryByMd5(String md5Email, boolean showAvailable) throws Exception {
     String url = BASE_URL + "?md5_email=" + URLEncoder.encode(md5Email, "UTF-8") + "&api_key=" + apiKey;
-    return getJsonResponse(url, upsell);
+    return getJsonResponse(url, showAvailable);
   }
 
   /**
@@ -141,13 +143,14 @@ public class RapleafApi {
   
   /**
    * @param sha1Email   Sha1 hashed string email for query
-   * @param upsell      If true, show upsale information in reply
+   * @param showAvailable  If true, return the string "Data Available" for
+   *                     fields the account is not subscribed to but for which Rapleaf has data
    * @return            Returns a JSONObject associated with the parameter(s)
    * @throws Exception  Throws error code on all HTTP statuses outside of 200 <= status < 300
    */
-  public JSONObject queryBySha1(String sha1Email, boolean upsell) throws Exception {
+  public JSONObject queryBySha1(String sha1Email, boolean showAvailable) throws Exception {
     String url = BASE_URL + "?sha1_email=" + URLEncoder.encode(sha1Email, "UTF-8") + "&api_key=" + apiKey;
-    return getJsonResponse(url, upsell);
+    return getJsonResponse(url, showAvailable);
   }
 
   /**
@@ -184,11 +187,12 @@ public class RapleafApi {
    * @param city        City name
    * @param state       State initials
    * @param email       Email address
-   * @param upsell      If true, show upsale information in response
+   * @param showAvailable  If true, return the string "Data Available" for
+   *                     fields the account is not subscribed to but for which Rapleaf has data
    * @return            Returns a JSONObject associated with the parameter(s)
    * @throws Exception  Throws error code on all HTTP statuses outside of 200 <= status < 300
    */
-  public JSONObject queryByNap(String first, String last, String street, String city, String state, String email, boolean upsell) throws Exception {
+  public JSONObject queryByNap(String first, String last, String street, String city, String state, String email, boolean showAvailable) throws Exception {
     String url;
     if (email != null) {
       url = BASE_URL + "?email=" + URLEncoder.encode(email, "UTF-8") + "&api_key=" + apiKey +
@@ -200,7 +204,7 @@ public class RapleafApi {
       "?first=" + URLEncoder.encode(first, "UTF-8") + "?last=" + URLEncoder.encode(last, "UTF-8") + 
       "?street=" + URLEncoder.encode(street, "UTF-8") + "?city=" + URLEncoder.encode(city, "UTF-8");
     }
-    return getJsonResponse(url, upsell);
+    return getJsonResponse(url, showAvailable);
   }
 
   /**
@@ -231,11 +235,12 @@ public class RapleafApi {
    * @param last        Last name
    * @param zip         String containing 5 digit Zipcode + 4 digit extension separated by dash
    * @param email       Email address
-   * @param upsell      If true, show upsale information in response
+   * @param showAvailable  If true, return the string "Data Available" for
+   *                     fields the account is not subscribed to but for which Rapleaf has data
    * @return            Returns a JSONObject associated with the parameter(s)
    * @throws Exception  Throws error code on all HTTP statuses outside of 200 <= status < 300
    */
-  public JSONObject queryByNaz(String first, String last, String zip4, String email, boolean upsell) throws Exception {
+  public JSONObject queryByNaz(String first, String last, String zip4, String email, boolean showAvailable) throws Exception {
     String url;
     if (email != null) {
       url = BASE_URL + "?email=" + URLEncoder.encode(email, "UTF-8") + "&api_key=" + apiKey +
@@ -245,7 +250,7 @@ public class RapleafApi {
       url = BASE_URL + "&api_key=" + apiKey + "?zip4=" + zip4 +
       "?first=" + URLEncoder.encode(first, "UTF-8") + "?last=" + URLEncoder.encode(last, "UTF-8");
     }
-    return getJsonResponse(url, upsell);
+    return getJsonResponse(url, showAvailable);
   }
 
   /**
@@ -253,20 +258,21 @@ public class RapleafApi {
    * @return
    * @throws Exception
    */
-  public JSONArray bulkQuery(Collection<Map<String,String>> set ) throws Exception {
+  public JSONArray bulkQuery(List<Map<String,String>> set) throws Exception {
     // default to false
     return bulkQuery(set, false);
   }
   
   /**
    * @param set
-   * @param upsell      If true, show upsell information in response
+   * @param showAvailable  If true, return the string "Data Available" for
+   *                     fields the account is not subscribed to but for which Rapleaf has data
    * @return            Returns a JSONArray of the responses
    * @throws Exception
    */
-  public JSONArray bulkQuery(Collection<Map<String,String>> set, boolean upsell) throws Exception {
+  public JSONArray bulkQuery(List<Map<String,String>> set, boolean showAvailable) throws Exception {
     String urlStr = BULK_URL + "?api_key=" + apiKey;
-    if ( upsell ) {
+    if ( showAvailable ) {
       urlStr = urlStr + "&show_available=true";
     }
     return new JSONArray(bulkJsonResponse(urlStr, new JSONArray(set).toString()));
@@ -299,12 +305,13 @@ public class RapleafApi {
   
   /**
    * @param urlStr      String email built in query with URLEncoded email
-   * @param upsell      If true, show upsale information in response
+   * @param showAvailable  If true, return the string "Data Available" for
+   *                     fields the account is not subscribed to but for which Rapleaf has data
    * @return            Returns a JSONObject hash from fields onto field values
    * @throws Exception  Throws error code on all HTTP statuses outside of 200 <= status < 300
    */
-  private JSONObject getJsonResponse(String urlStr, boolean upsell) throws Exception {
-    if ( upsell )
+  private JSONObject getJsonResponse(String urlStr, boolean showAvailable) throws Exception {
+    if ( showAvailable )
     {
       urlStr = urlStr + "&show_available=true";
     }
