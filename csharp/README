@@ -1,1 +1,4 @@
-The kit uses the JavaScriptSerializer class available in .NET Frameworks 3.5 and higher, in the System.Web.Extensions assembly
+C# Devkit
+=========
+* See RapleafExample.cs for sample usage for both direct and bulk APIs
+* The kit uses the JavaScriptSerializer class available in .NET Frameworks 3.5 and higher, in the System.Web.Extensions assembly
