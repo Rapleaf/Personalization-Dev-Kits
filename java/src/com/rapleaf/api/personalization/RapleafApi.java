@@ -32,13 +32,13 @@ import java.util.Map;
  * are stated at http://www.rapleaf.com/developers/api_usage.
  */
 public class RapleafApi {
-  private String apiKey;
-  private final static String BASE_URL = "https://personalize.rapleaf.com/v4/dr";
-  private final static String BULK_URL = "https://personalize.rapleaf.com/v4/bulk";
-  private final static int DEFAULT_TIMEOUT = 2000;
-  private final static int DEFAULT_BULK_TIMEOUT = 30000;
-  private final int timeout;
-  private final int bulkTimeout;
+  protected String apiKey;
+  protected final static String BASE_URL = "https://personalize.rapleaf.com/v4/dr";
+  protected final static String BULK_URL = "https://personalize.rapleaf.com/v4/bulk";
+  protected final static int DEFAULT_TIMEOUT = 2000;
+  protected final static int DEFAULT_BULK_TIMEOUT = 30000;
+  protected final int timeout;
+  protected final int bulkTimeout;
   
   /**
    * Constructor for RapleafApi class
@@ -278,7 +278,7 @@ public class RapleafApi {
     return new JSONArray(bulkJsonResponse(urlStr, new JSONArray(set).toString()));
   }  
   
-  private String bulkJsonResponse(String urlStr, String list) throws Exception {
+  protected String bulkJsonResponse(String urlStr, String list) throws Exception {
     URL url = new URL(urlStr);
     HttpURLConnection handle = (HttpURLConnection) url.openConnection();
     handle.setRequestProperty("User-Agent", "RapleafApi/Java/1.0");
@@ -315,7 +315,7 @@ public class RapleafApi {
    * @return            Returns a JSONObject hash from fields onto field values
    * @throws Exception  Throws error code on all HTTP statuses outside of 200 <= status < 300
    */
-  private JSONObject getJsonResponse(String urlStr, boolean showAvailable) throws Exception {
+  protected JSONObject getJsonResponse(String urlStr, boolean showAvailable) throws Exception {
     if ( showAvailable )
     {
       urlStr = urlStr + "&show_available=true";
@@ -338,7 +338,7 @@ public class RapleafApi {
     return new JSONObject(responseBody);
   }
   
-  private String MD5Hex(String s) {
+  protected String MD5Hex(String s) {
     String result = null;
     try {
       MessageDigest md5 = MessageDigest.getInstance("MD5");
@@ -348,7 +348,7 @@ public class RapleafApi {
     return result;
   }
 
-  private String toHex(byte[] a) {
+  protected String toHex(byte[] a) {
     StringBuilder sb = new StringBuilder(a.length * 2);
     for (int i = 0; i < a.length; i++) {
         sb.append(Character.forDigit((a[i] & 0xf0) >> 4, 16));
