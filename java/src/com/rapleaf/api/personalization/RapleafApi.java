@@ -196,13 +196,13 @@ public class RapleafApi {
     String url;
     if (email != null) {
       url = BASE_URL + "?email=" + URLEncoder.encode(email, "UTF-8") + "&api_key=" + apiKey +
-      "?first=" + URLEncoder.encode(first, "UTF-8") + "?last=" + URLEncoder.encode(last, "UTF-8") + 
-      "?street=" + URLEncoder.encode(street, "UTF-8") + "?city=" + URLEncoder.encode(city, "UTF-8") + 
-      "?state=" + URLEncoder.encode(state, "UTF-8");
+      "&first=" + URLEncoder.encode(first, "UTF-8") + "&last=" + URLEncoder.encode(last, "UTF-8") + 
+      "&street=" + URLEncoder.encode(street, "UTF-8") + "&city=" + URLEncoder.encode(city, "UTF-8") + 
+      "&state=" + URLEncoder.encode(state, "UTF-8");
     } else {
-      url = BASE_URL + "&api_key=" + apiKey + "?state=" + URLEncoder.encode(state, "UTF-8") +
-      "?first=" + URLEncoder.encode(first, "UTF-8") + "?last=" + URLEncoder.encode(last, "UTF-8") + 
-      "?street=" + URLEncoder.encode(street, "UTF-8") + "?city=" + URLEncoder.encode(city, "UTF-8");
+      url = BASE_URL + "?api_key=" + apiKey + "&state=" + URLEncoder.encode(state, "UTF-8") +
+      "&first=" + URLEncoder.encode(first, "UTF-8") + "&last=" + URLEncoder.encode(last, "UTF-8") + 
+      "&street=" + URLEncoder.encode(street, "UTF-8") + "&city=" + URLEncoder.encode(city, "UTF-8");
     }
     return getJsonResponse(url, showAvailable);
   }
@@ -244,11 +244,11 @@ public class RapleafApi {
     String url;
     if (email != null) {
       url = BASE_URL + "?email=" + URLEncoder.encode(email, "UTF-8") + "&api_key=" + apiKey +
-      "?first=" + URLEncoder.encode(first, "UTF-8") + "?last=" + URLEncoder.encode(last, "UTF-8") +
-      "?zip4=" + zip4;
+      "&first=" + URLEncoder.encode(first, "UTF-8") + "&last=" + URLEncoder.encode(last, "UTF-8") +
+      "&zip4=" + zip4;
     } else {
-      url = BASE_URL + "&api_key=" + apiKey + "?zip4=" + zip4 +
-      "?first=" + URLEncoder.encode(first, "UTF-8") + "?last=" + URLEncoder.encode(last, "UTF-8");
+      url = BASE_URL + "?api_key=" + apiKey + "&zip4=" + zip4 +
+      "&first=" + URLEncoder.encode(first, "UTF-8") + "&last=" + URLEncoder.encode(last, "UTF-8");
     }
     return getJsonResponse(url, showAvailable);
   }
