@@ -281,7 +281,7 @@ public class RapleafApi {
   protected String bulkJsonResponse(String urlStr, String list) throws Exception {
     URL url = new URL(urlStr);
     HttpURLConnection handle = (HttpURLConnection) url.openConnection();
-    handle.setRequestProperty("User-Agent", "RapleafApi/Java/1.0");
+    handle.setRequestProperty("User-Agent", getUserAgent());
     handle.setRequestProperty("Content-Type", "application/json");
     handle.setConnectTimeout(timeout);
     handle.setReadTimeout(bulkTimeout);
@@ -322,7 +322,7 @@ public class RapleafApi {
     }
     URL url = new URL(urlStr);
     HttpURLConnection handle = (HttpURLConnection) url.openConnection();
-    handle.setRequestProperty("User-Agent", "RapleafApi/Java/1.0");
+    handle.setRequestProperty("User-Agent", getUserAgent());
     handle.setConnectTimeout(timeout);
     handle.setReadTimeout(timeout);
     BufferedReader in = new BufferedReader(new InputStreamReader(handle.getInputStream()));
@@ -355,6 +355,10 @@ public class RapleafApi {
         sb.append(Character.forDigit(a[i] & 0x0f, 16));
     }
     return sb.toString();
+  }
+  
+  protected String getUserAgent() {
+    return "RapleafApi/Java/1.0";
   }
   
 }
