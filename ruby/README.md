@@ -71,3 +71,4 @@ Contributors
 ============
  - Greg Poulos [greg at rapleaf dot com]
  - Sean Carr [sean at rapleaf dot com]
+ - Vlad Shulman [vlad at rapleaf dot com]

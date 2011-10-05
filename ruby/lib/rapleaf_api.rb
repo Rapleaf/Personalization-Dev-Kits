@@ -1,4 +1,4 @@
-# Copyright 2010 Rapleaf
+# Copyright 2011 Rapleaf
 #
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@ include ERB::Util
 module RapleafApi
   HOST = "personalize.rapleaf.com"
   PORT = 443
-  HEADERS = {'User-Agent' => 'RapleafApi/Ruby/1.2.3', 'Content-Type' => 'application/json'}
+  HEADERS = {'User-Agent' => 'RapleafApi/Ruby/1.2.3'}
 
   class Api
     def initialize(api_key, options = {})
@@ -111,9 +111,9 @@ module RapleafApi
     def get_bulk_response(path, data)
       response = Timeout::timeout(@BULK_TIMEOUT) do
         begin
-          http_client.post(path, data, HEADERS)
+          http_client.post(path, data, HEADERS.merge('Content-Type' => 'application/json'))
         rescue EOFError # Connection cut out. Just try a second time.
-          http_client.post(path, data, HEADERS)
+          http_client.post(path, data, HEADERS.merge('Content-Type' => 'application/json'))
         end
       end
 
