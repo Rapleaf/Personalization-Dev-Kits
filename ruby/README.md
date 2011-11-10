@@ -14,7 +14,7 @@ Usage
     > api = RapleafApi::Api.new('my secret API key')
     => #<RapleafApi::Api:0x101b7f5f0 @API_KEY="my secret API key", @CA_FILE=nil, @TIMEOUT=2, @BASE_PATH="/v4/dr?api_key=my secret API key">
     > h = api.query_by_email('test@rapleaf.com')
-    => {"location"=>"Fakesville, California, United States", "gender"=>"Male", "age"=>"25-34"}
+    => {"gender"=>"Male", "age"=>"25-34"}
 
 Constructor Options
 -------------------
