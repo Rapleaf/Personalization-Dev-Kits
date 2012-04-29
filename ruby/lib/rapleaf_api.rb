@@ -31,6 +31,7 @@ module RapleafApi
       @API_KEY = api_key
       @BASE_PATH = "/v4/dr?api_key=#{@API_KEY}"
       @BULK_PATH = "/v4/bulk?api_key=#{@API_KEY}"
+      @UTIL_PATH = "/v4/util"
       @TIMEOUT = options[:timeout] || 2
       @BULK_TIMEOUT = options[:bulk_timeout] || 30
       @CA_FILE = options[:ca_file] # set to your system-wide root ca cert file 
@@ -99,6 +100,21 @@ module RapleafApi
       get_json_response(url, options[:show_available])
     end
   
+    # Takes a name and returns a hash which maps attribute fields onto attributes
+    def util_name_to_gender(name)
+      get_json_response("#{@UTIL_PATH}/name_to_gender/#{url_encode(name.strip)}?api_key=#{@API_KEY}")
+    end
+
+    # Takes an e-mail or username and returns a hash which maps attribute fields onto attributes
+    def util_name_deducer(email_or_username)
+      get_json_response("#{@UTIL_PATH}/name_deducer/#{url_encode(email_or_username.strip)}?api_key=#{@API_KEY}")
+    end
+
+    # Takes a name and returns a hash which maps attribute fields onto attributes
+    def util_name_normalizer(name)
+      get_json_response("#{@UTIL_PATH}/name_normalizer/#{url_encode(name.strip)}?api_key=#{@API_KEY}")
+    end
+
     def bulk_query(set, show_available = false)
       path = @BULK_PATH
       path += "&show_available=true" if show_available
