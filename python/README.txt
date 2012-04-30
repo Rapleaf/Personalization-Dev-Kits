@@ -85,7 +85,7 @@ urllib3
 
 	easy_install urllib3
 
-or visit the url http://urllib3.googlecode.com/files/urllib3-0.3.1.tar.gz.
+or visit the url https://github.com/shazow/urllib3/zipball/master.
 Once you've unzipped the download, open a terminal window and navigate to the folder into which you unzipped the download. When you open the folder, one of the subdirectories is 'urllib3.' Open it. It contains a script called setup.py which you'll run via the command 'python setup.py install'.
 
 Note that, on unsuccessful requests, we raise an error. Unsuccessful requests are any requests which send back an http response status outside of the range 200 <= status < 300.
