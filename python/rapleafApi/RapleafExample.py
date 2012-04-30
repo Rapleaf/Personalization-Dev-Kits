@@ -7,9 +7,9 @@ the provided e-mail (unknown fields are left blank)
 The hash returned from query_by_email is iterated through
 and each k/v pair is sent to std out """
   
-apiKey = 'SET_ME'        # Set your API key here
+api_key = 'SET_ME'        # Set your API key here
 email = sys.argv[1]         # Command line argument
-api = RapleafApi.RapleafApi(apiKey)   # Instance of the API class
+api = RapleafApi.RapleafApi(api_key)   # Instance of the API class
 try:
     response = api.query_by_email(email)
     for k, v in response.iteritems():
