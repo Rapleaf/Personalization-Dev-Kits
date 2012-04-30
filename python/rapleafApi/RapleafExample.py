@@ -13,8 +13,8 @@ api = RapleafApi.RapleafApi(api_key)   # Instance of the API class
 try:
     response = api.query_by_email(email)
     for k, v in response.iteritems():
-        print '%s = %s' %(k, v)
+        print('%s = %s' % (k, v))
 except Exception as inst:       # HTTP code returned other than 200
-    code, body = inst 
-    print 'Error Code =', code
-    print 'Error Body =', body
+    code, body = inst.args
+    print('Error Code = %d' % code)
+    print('Error Body = %s' % body)

@@ -12,7 +12,11 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
-import urllib
+try:
+    from urllib import quote
+except ImportError:
+    from urllib.parse import quote
+
 from urllib3 import HTTPSConnectionPool # See README for download instructions
 import json
 import hashlib
@@ -39,7 +43,7 @@ class RapleafApi:
             s = hashlib.sha1()
             s.update(email.lower())
             return self.query_by_sha1(s.hexdigest(), show_available)
-        url = '%s&email=%s' % (self.base_path, urllib.quote(email))
+        url = '%s&email=%s' % (self.base_path, quote(email))
         return self.__get_json_response(url, show_available)
     
     def query_by_md5(self, md5_email, show_available=False):
@@ -49,7 +53,7 @@ class RapleafApi:
         If the show_available option is set, then the string "Data Available" will be returned for 
         those fields which the API account is not subscribed but for which RapLeaf has data.
         """
-        url = '%s&md5_email=%s' % (self.base_path, urllib.quote(md5_email))
+        url = '%s&md5_email=%s' % (self.base_path, quote(md5_email))
         return self.__get_json_response(url, show_available)
     
     def query_by_sha1(self, sha1_email, show_available=False):
@@ -59,7 +63,7 @@ class RapleafApi:
         If the show_available option is set, then the string "Data Available" will be returned for 
         those fields which the API account is not subscribed but for which RapLeaf has data.
         """
-        url = '%s&sha1_email=%s' % (self.base_path, urllib.quote(sha1_email))
+        url = '%s&sha1_email=%s' % (self.base_path, quote(sha1_email))
         return self.__get_json_response(url, show_available)
         
     def query_by_nap(self, first, last, street, city, state, email=None, show_available=False):
@@ -71,10 +75,10 @@ class RapleafApi:
         those fields which the API account is not subscribed but for which RapLeaf has data.
         """
         url = '%s&first=%s&last=%s&street=%s&city=%s&state=%s' % (
-            self.base_path, urllib.quote(first), urllib.quote(last), 
-            urllib.quote(street), urllib.quote(city), urllib.quote(state))
+            self.base_path, quote(first), quote(last), 
+            quote(street), quote(city), quote(state))
         if email:
-            url = '%s&email=%s' % (url, urllib.quote(email))
+            url = '%s&email=%s' % (url, quote(email))
         return self.__get_json_response(url, show_available)
     
     def query_by_naz(self, first, last, zip4, email=None, show_available=False):
@@ -87,9 +91,9 @@ class RapleafApi:
         those fields which the API account is not subscribed but for which RapLeaf has data.
         """
         url = '%s&first=%s&last=%s&zip4=%s' % (
-            self.base_path, urllib.quote(first), urllib.quote(last), zip4)
+            self.base_path, quote(first), quote(last), zip4)
         if email:
-            url = '%s&email=%s' % (url, urllib.quote(email))
+            url = '%s&email=%s' % (url, quote(email))
         return self.__get_json_response(url, show_available)
         
     def __get_json_response(self, path, show_available=False):
@@ -108,4 +112,4 @@ class RapleafApi:
             else:
                 return {}
         else:
-            raise Exception(json_response.status, json_response.data)
+            raise Exception(json_response.status, json_response.data.decode("utf-8"))
