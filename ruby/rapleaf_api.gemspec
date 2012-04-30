@@ -2,12 +2,12 @@
 
 Gem::Specification.new do |s|
   s.name = %q{rapleaf_api}
-  s.version = "1.2.3.3"
+  s.version = "1.2.4"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 1.2") if s.respond_to? :required_rubygems_version=
   s.authors = ["Rapleaf"]
-  s.date = %q{2011-08-29}
-  s.description = %q{A library for interacting with Rapleaf's Personalization API.}
+  s.date = %q{2012-04-30}
+  s.description = %q{A library for interacting with Rapleaf's Personalization and Utilities APIs.}
   s.email = %q{developer @nospam@ rapleaf.com}
   s.extra_rdoc_files = ["CHANGELOG", "LICENSE", "README.md", "lib/rapleaf_api.rb"]
   s.files = ["CHANGELOG", "LICENSE", "Manifest", "README.md", "Rakefile", "lib/rapleaf_api.rb", "rapleaf_api.gemspec"]
