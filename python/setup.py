@@ -4,7 +4,7 @@ setup(
     name='RapLeafApi',
     author='RapLeaf',
     author_email='developer@rapleaf.com',
-    version='0.1.0',
+    version='0.1.1',
     packages=['rapleafApi'],
     url='http://www.rapleaf.com',
     description='A library for interacting with RapLeaf\'s Personalization API',
