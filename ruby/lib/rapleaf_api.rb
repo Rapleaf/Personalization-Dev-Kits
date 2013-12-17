@@ -172,4 +172,13 @@ module RapleafApi
       @@http_client
     end
   end
+
+
+  class EvpApi < Api
+    def initialize(*)
+      super
+      @BASE_PATH = "/evp?api_key=#{@API_KEY}"
+    end
+  end
+
 end
